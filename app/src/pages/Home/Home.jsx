@@ -1,46 +1,57 @@
-import React from 'react'
 import Navbar from '../../components/Navbar/Navbar'
-import Banner from '../../components/Banner/Banner'
-import FollowUs from '../../components/FollowUs/FollowUs'
+import { Button, Grid, Typography, Fade } from '@mui/material'
+import { INVITE_LINK } from '../../constants.js'
 
 const Home = () => {
   return (
     <>
-    <div className='bg-home-background h-screen bg-no-repeat w-full bg-cover'>
+    <div className=' h-screen bg-no-repeat w-full bg-cover'>
         <Navbar/>
-
-        <div className='grid grid-cols-1 justify-items-center bg-cover bg-center text-white '>
-            <div className='home-text mt-52 mb-0'>
-                <h1 className='text-6xl font-bold ' style={{fontFamily: 'Helvetica'}}>Explore Your Creative Writing Skills With Focus</h1>
+        <Grid display={"flex"} padding={"24px"} flexDirection={"column"} alignItems={"center"} justifyContent={"center"}>
+            <Fade timeout={2000} appear in>
+            <Typography sx={{ mt: "12vh", fontSize: {xs: "100px", sm: "180px"},textAlign: {xs: "left", sm: "center", lg: "center"}}} color={"primary"} variant="h1">
+                <strong>dash</strong>Off
+            </Typography>
+            </Fade>
+            <Typography sx={{ mt: "20px", fontSize: {xs: "16px", sm: "40px"},textAlign: {xs: "left", sm: "center", lg: "center"}}} color={"gray"} >
+                Explore Your Creative Writing Skills
+            </Typography>
+        <Grid sx={{display: "flex", flexWrap: "wrap", justifyContent: "center"}} className='mt-40'>
+            <Fade timeout={3000} appear in>
+            <div className='bg-slate-400 bg-opacity-5 max-w-40 py-6 px-4 text-center align-middle rounded-md'>
+                <Typography color={"black"} fontWeight={"300"}>
+                    Write and focus solely on creation
+                </Typography>
             </div>
-            <div className='home-subtexgt mt-4 '>
-                <h3 className='text-2xl '>Focus. Write. Check scores. Repeat</h3>
+            </Fade>
+            <Fade timeout={5000} appear in>
+            <div className='bg-slate-400 bg-opacity-10 max-w-40 text-white py-6 px-4 text-center align-middle rounded-md'>
+                <Typography color={"black"} fontWeight={"300"}>
+                Improve with challenges and feedback
+                </Typography>
             </div>
-        </div>
-
-        <div className='flex justify-center mt-40 mb-52'>
-            <div className='bg-slate-400 bg-opacity-10 w-40 text-white'>
-                <p><strong>We help...</strong></p>
-                <p>Focus on your creative moments and leave the vocabulary and corrections to us</p>
+            </Fade>
+            <Fade timeout={7000} appear in>
+            <div className='bg-slate-400 bg-opacity-15 max-w-40 text-white py-6 px-4 text-center align-middle rounded-md'>
+                <Typography color={"black"} fontWeight={"300"}>
+                Share your creatives
+                </Typography>
             </div>
-            <div className='bg-slate-400 bg-opacity-30 w-40 text-white'>
-                <p><strong>We help...</strong></p>
-                <p>Ipso facto, the quick brown fox jumps over the lazy dog.</p>
+            </Fade>
+            <Fade timeout={9000} appear in>
+            <div className='bg-slate-400 bg-opacity-25 max-w-40 text-white py-6 px-4 text-center align-middle rounded-md'>
+            <Typography color={"black"} fontWeight={"300"}>
+                Don’t wait for inspiration, join the wailist
+                </Typography>
             </div>
-            <div className='bg-slate-400 bg-opacity-10 w-40 text-white'>
-                <p><strong>We help...</strong></p>
-                <p>Focus on your creative moments and leave the vocabulary and corrections to us</p>
-            </div>
-            <div className='bg-slate-400 bg-opacity-30 w-40 text-white'>
-                <p><strong>We help...</strong></p>
-                <p>Focus on your creative moments and leave the vocabulary and corrections to us</p>
-            </div>
-        </div>
+            </Fade>
+        </Grid>
+            <Button onClick={() => window.open(INVITE_LINK, "_blank").focus()} size="large" sx={{padding: "25px 60px", mt: "50px", backgroundColor: "seconday.dark"}} variant="contained">
+                <Typography color={"white"} fontWeight={"500"} fontSize="20px">Join Waitlist</Typography>
+            </Button>
+        </Grid>
     </div>
-    
-        <Banner/>
-        <FollowUs/>
-    </>
+</>
   )
 }
 
