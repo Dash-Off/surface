@@ -1,14 +1,12 @@
-import { ThemeProvider } from '@mui/material/styles';
-import './App.css'
-import theme from './theme.js';
+import { ThemeProvider } from "@mui/material/styles";
+import "./App.css";
+import theme from "./theme.js";
 //import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
-import Home from './pages/Home/Home';
+import Home from "./pages/Home/Home";
 //import Test from './pages/Test/Test';
-import { CssBaseline } from '@mui/material';
-
+import { CssBaseline } from "@mui/material";
 
 const App = () => {
-
   /*const routes = (
     <Router>
       <Routes>
@@ -21,13 +19,12 @@ const App = () => {
 
   return (
     <>
-    <ThemeProvider theme={theme}>
-    <CssBaseline />
-      <Home/>
-    </ThemeProvider>
+      <ThemeProvider theme={theme}>
+        <CssBaseline />
+        <Home />
+      </ThemeProvider>
+    </>
+  );
+};
 
-     </> 
-  ) 
-}
-
-export default App
+export default App;
