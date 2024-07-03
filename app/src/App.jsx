@@ -1,16 +1,15 @@
-import React, { useState } from 'react'
-import Navbar from './components/Navbar/Navbar';
-import Sidebar from './components/Sidebar.jsx/Sidebar';
-import TextEditor from './components/TextEditor/TextEditor';
-import Assistant from './components/Assistant/Assistant';
-import { BrowserRouter as Router, Link, Route, Routes } from 'react-router-dom';
+import { ThemeProvider } from '@mui/material/styles';
+import './App.css'
+import theme from './theme.js';
+//import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
 import Home from './pages/Home/Home';
-import Test from './pages/Test/Test';
+//import Test from './pages/Test/Test';
+import { CssBaseline } from '@mui/material';
 
 
 const App = () => {
 
-  const routes = (
+  /*const routes = (
     <Router>
       <Routes>
       <Route path="/" exact element={<Test/>}/>
@@ -18,12 +17,14 @@ const App = () => {
       </Routes>
     </Router>
   
-  );
+  );*/
 
   return (
     <>
-
-      {routes}
+    <ThemeProvider theme={theme}>
+    <CssBaseline />
+      <Home/>
+    </ThemeProvider>
 
      </> 
   ) 
