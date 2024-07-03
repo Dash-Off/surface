@@ -9,14 +9,17 @@ const Home = () => {
         <Navbar/>
         <Grid display={"flex"} padding={"24px"} flexDirection={"column"} alignItems={"center"} justifyContent={"center"}>
             <Fade timeout={2000} appear in>
-            <Typography sx={{ mt: "12vh", fontSize: {xs: "100px", sm: "180px"},textAlign: {xs: "left", sm: "center", lg: "center"}}} color={"primary"} variant="h1">
+            <Typography sx={{ mt: "10vh", fontSize: {xs: "100px", sm: "180px"},textAlign: {xs: "left", sm: "center", lg: "center"}}} color={"primary"} variant="h1">
                 <strong>dash</strong>Off
             </Typography>
             </Fade>
             <Typography sx={{ mt: "20px", fontSize: {xs: "16px", sm: "40px"},textAlign: {xs: "left", sm: "center", lg: "center"}}} color={"gray"} >
                 Explore Your Creative Writing Skills
             </Typography>
-        <Grid sx={{display: "flex", flexWrap: "wrap", justifyContent: "center"}} className='mt-40'>
+            <Button onClick={() => window.open(INVITE_LINK, "_blank").focus()} size="large" sx={{padding: "25px 60px", mt: "50px", backgroundColor: "seconday.dark"}} variant="contained">
+                <Typography color={"white"} fontWeight={"500"} fontSize="20px">Join Waitlist</Typography>
+            </Button>
+        <Grid sx={{display: "flex", flexWrap: "wrap", justifyContent: "center", mt: "40px"}}>
             <Fade timeout={3000} appear in>
             <div className='bg-slate-400 bg-opacity-5 max-w-40 py-6 px-4 text-center align-middle rounded-md'>
                 <Typography color={"black"} fontWeight={"300"}>
@@ -46,9 +49,7 @@ const Home = () => {
             </div>
             </Fade>
         </Grid>
-            <Button onClick={() => window.open(INVITE_LINK, "_blank").focus()} size="large" sx={{padding: "25px 60px", mt: "50px", backgroundColor: "seconday.dark"}} variant="contained">
-                <Typography color={"white"} fontWeight={"500"} fontSize="20px">Join Waitlist</Typography>
-            </Button>
+
         </Grid>
     </div>
 </>
