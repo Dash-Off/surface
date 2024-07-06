@@ -43,7 +43,7 @@ const Home = () => {
             sx={{
               padding: "25px 60px",
               mt: "50px",
-              backgroundColor: "seconday.dark",
+              backgroundColor: "secondary.dark",
             }}
             variant="contained"
           >

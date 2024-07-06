@@ -1,13 +1,7 @@
 import { createTheme } from "@mui/material/styles";
 export default createTheme({
   components: {
-    MuiOutlinedInput: {
-      styleOverrides: {
-        root: {
-          border: "1px solid #487e4c", // Color is primary.light
-        },
-      },
-    },
+  
     MuiPaper: {
       styleOverrides: {
         root: {
