@@ -1,5 +1,6 @@
 import axios from "axios";
 import { toast } from "react-toastify";
+import { loadCurrentDashOff } from "../store/dashoff-slice";
 
 const HOST_URL = "http://localhost:3000/api/v1";
 const api = axios.create({
@@ -48,5 +49,26 @@ export const registerUser = (params = {}, cb) => {
         (err && err.response && err.response.data.error.message) ||
           "Registration error",
       );
+    });
+};
+
+export const saveDashOff = (content) => {
+  return api
+    .patch(getURL("/saveDashOff"), content)
+    .then(({ data }) => {})
+    .catch((err) => {
+      //toast.error("Failed to save dashoff");
+      console.log("Failed to upload latest content");
+    });
+};
+
+export const fetchCurrentDashOff = (id) => (dispatch) => {
+  return api
+    .get(getURL(`/myDashOffs/${id}`))
+    .then(({ data }) => {
+      dispatch(loadCurrentDashOff(data));
+    })
+    .catch((err) => {
+      // handle if required
     });
 };
