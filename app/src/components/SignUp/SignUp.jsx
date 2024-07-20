@@ -1,9 +1,20 @@
-import React from 'react'
+import React, { useState } from 'react'
 import SignUpImage from '../../assets/LoginImage.jpg';
 import { Button, Grid, TextField, Typography, FormControl, InputLabel, Select, MenuItem, Box, useMediaQuery, Fade } from '@mui/material';
+import { useNavigate } from 'react-router-dom';
+import { validateEmail } from '../../utils/helper';
+import axiosInstance from '../../utils/axiosinstance';
 
 
 const SignUp = (props) => {
+
+    const [name, setName] = useState('');
+    const [email, setEmail] = useState('');
+    const [password, setPassword] = useState('');
+    const [confirmPassword, setConfirmPassword] = useState('');
+    const [error, setError] = useState(null);
+
+    const navigate = useNavigate();
     
     const isSmallScreen = useMediaQuery('(max-width:1000px)'); // 600px for small and extra small screens
 
@@ -14,10 +25,80 @@ const SignUp = (props) => {
         borderRadius: '20px',
     }
 
-    const textFieldStyle = {
-        marginTop: '7px',
-        width: '25vw',
-    }
+    const handleSignUp = async (e) => {
+        e.preventDefault();
+        // console.log('Inside handleSignUp')
+    
+        if (!name){
+            console.log('Please enter your name')
+            setError('Please enter your name');
+            return;
+        }
+    
+        if (!validateEmail(email)){
+            console.log('Please enter a valid email')
+            setError('Please enter a valid email');
+            return;
+        }
+    
+        if (!password){
+            console.log('Please enter your password')
+            setError('Please enter your password');
+            return;
+        }
+    
+        setError("");
+        // console.log('name : ', name)
+        
+        // SignUp API Call
+        try{
+
+            console.log('name : ', name)
+            console.log('email : ', email)
+            console.log('confirmPassword : ', confirmPassword)
+            console.log('password : ', password )
+
+            const response = await axiosInstance.post('/api/v1/auth/register', {
+                name : name,
+                gender : 'MALE',
+                email: email,
+                passwordConfirmation : confirmPassword,
+                password:  password,
+            });
+            
+            console.log('name : ', name)
+            console.log('email : ', email)
+            console.log('confirmPassword : ', confirmPassword)
+            console.log('password : ', password )
+            console.log('response : ', response.data)
+
+            // Handle successful registration response
+            if (response.data && response.data.error){        
+                setError(response.data.message)
+                return;
+            }
+    
+            // if (response.data && response.data.accessToken){
+            if (response.data){
+                localStorage.setItem('token', response.data.accessToken)
+                navigate('/dashboard')
+            }
+        }catch(error){
+            console.log('Error in SignUp API Call : ', error)
+            console.log('error.response : ', error.response)    
+            console.log('error.response.data : ', error.response.data)  
+            console.log('error.response.data.message : ', error.response.data.message)
+
+            if(error.response && error.response.data && error.response.data.error.message){
+                setError(error.response.data.error.message);
+            }else{
+                setError('Something went wrong. Please try again later');
+            }
+        }
+    };
+
+    
+
 
   return (
     <div>
@@ -76,7 +157,7 @@ const SignUp = (props) => {
                         }
                       }}
                 >
-                    {/* <Fade timeout={2000} appear in> */}
+                    
                         <TextField 
                             InputProps={{style: {borderRadius: '15px',} }}
                             sx={{                    
@@ -84,12 +165,12 @@ const SignUp = (props) => {
                                 marginRight: '20px',
                                 width: { sm : '60vw', md: '30vw' ,lg: '20vw'},
                             }}
-                            id="outlined-basic" label="Your Name" variant="outlined"  
+                            id="outlined-basic" label="Your Name" variant="outlined"
+                            onChange={(e) => setName(e.target.value)}  
                             fullWidth required
                         />
-                    {/* </Fade> */}
+                    
 
-                    {/* <Fade timeout={2000} appear in> */}
                     <FormControl 
                         sx={{ 
                             marginTop: '20px', 
@@ -118,25 +199,23 @@ const SignUp = (props) => {
                             <MenuItem value="Other">Other</MenuItem>
                         </Select>
                     </FormControl>
-                    {/* </Fade> */}
+                                        
 
-                    {/* <Fade timeout={2000} appear in> */}
                     <TextField 
-                        InputProps={{style: {borderRadius: '15px',} }} 
-                        
+                        InputProps={{style: {borderRadius: '15px',} }}                         
                         sx={{                    
                             marginTop: '20px',
                             marginRight: '20px',
                             width: { sm : '60vw', md: '30vw' ,lg: '20vw'},
                         }}
-                        id="outlined-basic" label="Email Address" variant="outlined"  
+                        id="signup-email-input" label="Email Address" variant="outlined"
+                        onChange={(e) => setEmail(e.target.value)}  
                         fullWidth required
-                    />
-                    {/* </Fade> */}
+                    />                   
 
-                    {/* <Fade timeout={2000} appear in> */}
+                    
                     <TextField
-                        id="outlined-password-input" 
+                        id="signup-password-input" 
                         InputProps={{style: {borderRadius: '15px',} }}
                         type='password'
                         sx={{                    
@@ -144,12 +223,12 @@ const SignUp = (props) => {
                             marginRight: '20px',
                             width: { sm : '60vw', md: '30vw' ,lg: '20vw'},
                         }}
-                        label="Password" variant="outlined"  
+                        label="Password" variant="outlined"
+                        onChange={(e => setPassword(e.target.value))}  
                         fullWidth required
                     />
-                    {/* </Fade> */}
-                    
-                    {/* <Fade timeout={2000} appear in> */}
+                 
+
                     <TextField
                         id="outlined-confirm-password-input" 
                         InputProps={{style: {borderRadius: '15px',} }}
@@ -159,12 +238,13 @@ const SignUp = (props) => {
                             marginRight: '20px',
                             width: { sm : '60vw', md: '30vw' ,lg: '20vw'},
                         }}
-                        label="Confirm Password" variant="outlined"  
+                        label="Confirm Password" variant="outlined"
+                        onChange={(e => setConfirmPassword(e.target.value))}    
                         fullWidth required
                     />  
-                    {/* </Fade> */}
+                    
+                    {error && <p className="text-red-500 text-xs pb-1">{error}</p>}
 
-                    {/* <Fade timeout={2000} appear in> */}
                     <Button size="large"
                         sx={{
                             // padding: "5px 10px",
@@ -176,6 +256,7 @@ const SignUp = (props) => {
                             marginRight: { xs:'20px' , sm : '20px', md: '20px' ,lg: '20px'},                            
                         }}
                         variant="contained"
+                        onClick={handleSignUp}
                     >
                         <Typography color={"white"} fontWeight={"400"} fontSize="15px">
                             Sign Up
@@ -218,7 +299,7 @@ const SignUp = (props) => {
                         Already have an account ? 
                         <span
                                 style={{ cursor: 'pointer', textDecoration: 'underline', color: 'secondary.dark', marginLeft: '2px' }}
-                                onClick={props.onSignUpClick} // Use the passed function on click
+                                onClick={props.onSignInClick} // Use the passed function on click
                             >
                                 <Typography sx={{
                                     ml: '2px',

@@ -8,10 +8,11 @@ import { CssBaseline } from "@mui/material";
 import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
 import Home from './pages/Home';
 import Test from './pages/Test/Test';
-import Login from '../../app/src/pages/Login/Login';
-import SignUp from '../../app/src/pages/SignUp/SignUp';
 import Auth from "./pages/Auth/Auth.jsx";
-
+import Dashboard from "./pages/Dashboard/Dashboard.jsx";
+import Dashboard1 from "./pages/Dashboard/Dashboard1.jsx";
+import DashboardSlider from "./components/DashboardSlider/DashboardSlider.jsx";
+import Sidebar1 from "./components/Sidebar/Sidebar1.jsx";
 
 const App = () => {
 
@@ -20,9 +21,11 @@ const App = () => {
       <Routes>
       <Route path="/" exact element={<Test/>}/>
         <Route path="/home" exact element={<Home/>}/>
-        {/* <Route path="/login" exact element={<Login/>}/> */}
-        {/* <Route path="/signup" exact element={<SignUp/>}/> */}
         <Route path="/auth" exact element={<Auth/>}/>
+        <Route path="/dashboard" exact element={<Dashboard/>}/>
+        <Route path="/dashboard1" exact element={<Dashboard1/>}/>
+        <Route path="/slider" exact element={<DashboardSlider/>}/>
+        <Route path="/side" exact element={<Sidebar1/>}/>
       </Routes>
     </Router>
   );
