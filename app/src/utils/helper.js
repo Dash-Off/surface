@@ -13,3 +13,21 @@ export const getInitials = (name) => {
   }
   return initials;
 };
+
+const WRITING_PREFIX_CONTENT = "#DO-";
+const getContentKey = (id) => `${WRITING_PREFIX_CONTENT}${id}`;
+
+export const writingContentCache = {
+  save: (id, raw, markup) =>
+    localStorage.setItem(
+      getContentKey(id),
+      JSON.stringify({
+        raw,
+        markup,
+      }),
+    ),
+  get: (id) => {
+    let content = localStorage.getItem(getContentKey(id));
+    return content && JSON.parse(content);
+  },
+};
