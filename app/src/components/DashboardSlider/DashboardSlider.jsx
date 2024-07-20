@@ -84,6 +84,7 @@ const Slider = (props) => {
                             cardHeadline = {card.headline}
                             cardDescription={card.description}
                             cardTimeStamp={card.timeStamp}
+                            cardVisibility={card.visibility}
                         />
                     </SwiperSlide>
                 )

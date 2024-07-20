@@ -1,18 +1,17 @@
-import { Card, CardMedia, CardContent,CardActions , Typography, Button } from '@mui/material'
+import { Card, CardMedia, CardContent,CardActions , Typography, Button, Box} from '@mui/material'
 import React, { useState } from 'react'
+import VisibilityOffIcon from '@mui/icons-material/VisibilityOff';
 
-const DashboardCard = ({cardTitle, cardHeadline, cardDescription, cardTimeStamp, onDescriptionChange}) => {
+const DashboardCard = ({cardTitle, cardHeadline, cardDescription, cardTimeStamp, cardVisibility}) => {
 
-   
-
-    const handleClick = () => {
-        // onDescriptionChange(cardDescription);
-        console.log('description : ', description)
-    };
+    // const handleClick = () => {
+    //     // onDescriptionChange(cardDescription);
+    //     console.log('description : ', description)
+    // };
 
   return (
         <Card 
-            onClick={handleClick}
+            // onClick={handleClick}
             // sx={{ maxWidth: '145px', height : '140px' , marginLeft : '5px'}}
             sx={{
                 // maxWidth: '145px',
@@ -26,9 +25,26 @@ const DashboardCard = ({cardTitle, cardHeadline, cardDescription, cardTimeStamp,
               }}            
         >
             <CardContent>
-                <Typography variant="h5">{cardTitle}</Typography>
-                <Typography variant="body2">{cardHeadline}</Typography> 
-                <Typography variant="body2">{cardTimeStamp}</Typography>
+                {cardVisibility ? <VisibilityOffIcon /> : 
+
+                <Box
+                    sx={{
+                        display: 'flex',
+                        flexDirection: 'column',
+                        justifyContent: 'center',
+                        alignItems: 'center',
+                        textAlign: 'center',
+                        height: '100px',
+                        width: 'auto'
+                    }}
+                >
+                    <Typography variant="h5">{cardTitle}</Typography>       
+                    <Typography variant="body2">{cardHeadline}</Typography> 
+                    <Typography variant="body2">{cardTimeStamp}</Typography>
+                </Box>                    
+            
+            }
+                
             </CardContent>
         </Card>
   )
