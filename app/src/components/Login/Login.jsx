@@ -1,8 +1,17 @@
-import React from 'react'
+import React, { useState } from 'react'
+import { Link, useNavigate } from 'react-router-dom'
+import axiosInstance from '../../utils/axiosinstance';
+import { validateEmail } from '../../utils/helper'
 import { Button, Grid, TextField, Typography, FormControl, InputLabel, Select, MenuItem, Box, useMediaQuery, Fade, FormControlLabel, Checkbox } from '@mui/material';
 
 
 const Login = (props) => {
+
+    const [email, setEmail] = useState('');
+    const [password, setPassword] = useState('');
+    const [error, setError] = useState(null);
+
+    const navigate = useNavigate()
     
     const isSmallScreen = useMediaQuery('(max-width:1000px)'); // 600px for small and extra small screens
 
@@ -13,10 +22,57 @@ const Login = (props) => {
         borderRadius: '20px',
     }
 
-    const textFieldStyle = {
-        marginTop: '7px',
-        width: '25vw',
-    }
+    const handleLogin = async (e) => {
+        e.preventDefault();
+        
+        // console.log('Login clicked');
+        if (!validateEmail(email)) {
+            console.log('Invalid email');
+            setError('Please enter a valid email');
+            return;
+        }
+    
+        if(!password) {
+          setError('Please enter the password');
+          return;
+        }
+    
+        setError("");
+    
+        //Login API Call
+        try{
+
+            console.log('email : ', email);
+            console.log('password : ', password);
+            const response = await axiosInstance.post('/api/v1/auth/login', {
+                username: email,
+                password:  password,
+          });
+          
+          console.log('response : ', response);
+          console.log('response.data : ', response.data);
+          console.log('response.data.accessToken : ', response.data.accessToken);
+
+          // Handle successful login response
+        //   if (response.data && response.data.accessToken){
+        if (response.data ){
+            localStorage.setItem('token', response.data.accessToken);
+            // localStorage.setItem('refreshToken', response.data.refreshToken);
+            // window.location.href = '/dashboard';
+            console.log('Login successful inside login.js');
+            navigate('/dashboard')
+          }
+        }catch(error){
+          if(error.response && error.response.data && error.response.data.message){
+            console.log('error ! : ', error.response.data.message);
+            setError(error.response.data.message);
+          }else{
+            console.log('error : ', error);
+            setError('Something went wrong. Please try again later');
+          }
+        }
+      };
+
 
   return (
     <div>
@@ -78,19 +134,20 @@ const Login = (props) => {
             
                     <TextField 
                         InputProps={{style: {borderRadius: '15px',} }} 
-                        
+                        type='email'
                         sx={{                    
                             marginTop: '20px',
                             marginRight: '20px',
                             width: { sm : '60vw', md: '30vw' ,lg: '20vw'},
                         }}
-                        id="outlined-basic" label="Email Address" variant="outlined"  
-                        fullWidth required
+                        id="login-email-input" label="Email Address" variant="outlined"  
+                        fullWidth required                    
+                        onChange={(e) => setEmail(e.target.value)}
                     />
                     
 
                     <TextField
-                        id="outlined-password-input" 
+                        id="login-password-input" 
                         InputProps={{style: {borderRadius: '15px',} }}
                         type='password'
                         sx={{                    
@@ -100,6 +157,8 @@ const Login = (props) => {
                         }}
                         label="Password" variant="outlined"  
                         fullWidth required
+                        onChange={(e) => setPassword(e.target.value)}
+                        
                     />
                     
                        <FormControlLabel 
@@ -111,7 +170,8 @@ const Login = (props) => {
                             name="checkBox"
                             color="primary"/>} 
                             label="Remember me" />
-                            
+                        
+                        {error && <p className="text-red-500 text-xs pb-1">{error}</p>}
                     
                     <Button size="large"
                         sx={{
@@ -123,6 +183,8 @@ const Login = (props) => {
                             marginTop: '20px',
                             marginRight: { xs:'20px' , sm : '20px', md: '20px' ,lg: '20px'},                            
                         }}
+                        onClick={handleLogin}
+                        type='submit'
                         variant="contained"
                     >
                         <Typography color={"white"} fontWeight={"400"} fontSize="15px">
@@ -163,7 +225,7 @@ const Login = (props) => {
                                 Forgot Password ?
                             </Typography>
                         </a>
-                    {/* </Typography> */}
+                    
 
                     <Typography color={"#ada9a8"} fontWeight={"400"} fontSize="15px">
                         {/* Need an account ?
@@ -194,13 +256,15 @@ const Login = (props) => {
                                 </Typography>
                             </span>
                     </Typography>
+                    
+                    {/* <Button
+                         onClick={handleLogin}
+                     >Click Me</Button> */}
 
-                </Grid>
+                    </Grid>
                 </Fade>                
-            </div>
-            
+            </div>            
         </Grid>
-
     </div>
   )
 }

@@ -16,6 +16,8 @@ import {
   AiOutlineLogout,
 } from "react-icons/ai";
 import { RiDashboardFill } from "react-icons/ri";
+
+
 const Sidebar = () => {
   const [open, setOpen] = useState(false);
   const [submenuOpen, setSubmenuOpen] = useState(false);
@@ -59,7 +61,7 @@ const Sidebar = () => {
         <h1
           className={`text-white origin-left font-medium text-2xl transition-width ease-in-out duration-300 ${!open && "scale-0"}`}
         >
-          Tailwind
+          <strong>Dash</strong>Off
         </h1>
       </div>
 

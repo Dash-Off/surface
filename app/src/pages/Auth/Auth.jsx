@@ -21,11 +21,6 @@ const Auth = () => {
         borderRadius: '20px',
     }
 
-    const textFieldStyle = {
-        marginTop: '7px',
-        width: '25vw',
-    }
-
 
 return (
   <div>
@@ -40,7 +35,7 @@ return (
         {isSignUp ? "Already have an account? Log In" : "Don't have an account? Sign Up"}
       </Button> */}
 
-      {isSignUp ? <SignUp onSignUpClick={toggleSignUp} /> :  <Login onSignUpClick={toggleSignUp} />}
+      {isSignUp ? <SignUp onSignInClick={toggleSignUp} /> :  <Login onSignUpClick={toggleSignUp} />}
     
       <Fade timeout={500} appear in>
           <div>
