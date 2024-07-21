@@ -7,6 +7,7 @@ import DashboardCard from '../../components/Cards/DashboardCard'
 import ParticleBackground from '../../components/ParticleBackground'
 import DashboardSlider from '../../components/DashboardSlider/DashboardSlider';
 import Sidebar1 from '../../components/Sidebar/Sidebar1';
+import WelcomeTitle from '../../components/WelcomeTitle/WelcomeTitle'
 
 
 
@@ -106,7 +107,9 @@ const Dashboard = () => {
         <div className="flex">
           <Sidebar1/>  
             <Box className='container mx-auto'>
-            
+
+              <WelcomeTitle />
+              
               <Box
                 sx={{
                   display: 'flex',
@@ -203,30 +206,7 @@ const Dashboard = () => {
                           visibility: 'visible',
                         }}
                       > Start </Button>
-                    </Fade>
-
-                    {/* <Box 
-                        sx={{
-                          width: "40vw",
-                          paddingTop: "20px",
-                        }}
-                      >
-                        <Fade timeout={1000} appear in>
-                          <Typography
-                            className='description'
-                            sx={{
-                                fontSize: { xs: "15px", sm: "25px", lg: "12px" },
-                                textAlign: { xs: "left", sm: "left", lg: "left" },
-                                fontWeight: "bold",
-                                // color: "#808080",
-                                minHeight: "50vh",
-                            }}
-                            color={"primary"}
-                            >
-                            {activeCard.description}
-                            </Typography>
-                        </Fade>
-                    </Box>   */}
+                    </Fade>                   
 
                 </Box>
                 <Fade timeout={1000} appear in>
