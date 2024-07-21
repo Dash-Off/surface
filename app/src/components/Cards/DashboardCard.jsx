@@ -4,17 +4,9 @@ import VisibilityOffIcon from '@mui/icons-material/VisibilityOff';
 
 const DashboardCard = ({cardTitle, cardHeadline, cardDescription, cardTimeStamp, cardVisibility}) => {
 
-    // const handleClick = () => {
-    //     // onDescriptionChange(cardDescription);
-    //     console.log('description : ', description)
-    // };
-
   return (
         <Card 
-            // onClick={handleClick}
-            // sx={{ maxWidth: '145px', height : '140px' , marginLeft : '5px'}}
-            sx={{
-                // maxWidth: '145px',
+            sx={{                
                 height: '200px',
                 width: '100%',
                 display: 'flex',

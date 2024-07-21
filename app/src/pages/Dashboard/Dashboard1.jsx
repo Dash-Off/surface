@@ -105,7 +105,6 @@ const Dashboard = () => {
         
         <div className="flex">
           <Sidebar1/>  
-            {/* <Sidebar /> */} 
             <Box className='container mx-auto'>
             
               <Box
@@ -230,7 +229,11 @@ const Dashboard = () => {
                     </Box>   */}
 
                 </Box>
-                <DashboardSlider activeCard={activeCard} setActiveCard={setActiveCard} cards={cards}/>
+                <Fade timeout={1000} appear in>
+                  <Box>
+                    <DashboardSlider activeCard={activeCard} setActiveCard={setActiveCard} cards={cards}/>
+                  </Box>
+                </Fade>
             </Box>
             
         </div>
