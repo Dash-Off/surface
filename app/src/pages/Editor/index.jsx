@@ -9,11 +9,16 @@ import { Grid, Paper, Typography } from "@mui/material";
 import Path from "../../components/Path/index.jsx";
 import { writingContentCache } from "../../utils/helper.js";
 import debounce from "lodash/debounce";
+import moment from "moment";
+import TimeUpModal from "../../components/TimeUpModal/index.jsx";
+import Timer from "../../components/Timer/index.jsx";
 
 const Editor = () => {
   const [value, setValue] = useState("");
   const [headingVisible, setHeadingVisible] = useState(true);
   const [mainHeadingVisible, setMainHeadingVisible] = useState(true);
+  const [remainingTime, setRemainingTime] = useState(-1);
+  const [timeup, setTimeUp] = useState(false);
 
   const { id } = useParams();
   const dispatch = useDispatch();
@@ -23,15 +28,17 @@ const Editor = () => {
   const currentDashOff = useSelector(getCurrent());
 
   const adjustScroll = () => {
-    const quillEditor = editorRef.current.getEditor();
-    const editorElem = quillEditor.root;
-    const padding = 100; // Set the padding value
-    const editorHeight = editorElem.clientHeight;
-    const scrollHeight = editorElem.scrollHeight;
-    const scrollTop = editorElem.scrollTop;
-    editorElem.scrollIntoView(false);
-    if (scrollHeight - scrollTop - editorHeight < padding) {
-      editorElem.scrollTop = document.body.scrollHeight;
+    if (editorRef.current) {
+      const quillEditor = editorRef.current.getEditor();
+      const editorElem = quillEditor.root;
+      const padding = 100; // Set the padding value
+      const editorHeight = editorElem.clientHeight;
+      const scrollHeight = editorElem.scrollHeight;
+      const scrollTop = editorElem.scrollTop;
+      editorElem.scrollIntoView(false);
+      if (scrollHeight - scrollTop - editorHeight < padding) {
+        editorElem.scrollTop = document.body.scrollHeight;
+      }
     }
   };
 
@@ -94,8 +101,35 @@ const Editor = () => {
   }, []);
 
   useEffect(() => {
+    let interval = undefined;
+    let deadLine;
+    if (currentDashOff && currentDashOff.duration !== -1 && !interval) {
+      deadLine = moment(currentDashOff.createdAt).add(
+        currentDashOff.duration,
+        "seconds",
+      );
+
+      interval = setInterval(() => {
+        let remaining = deadLine.diff(moment());
+        if (remaining <= 0) {
+          setRemainingTime(0);
+          setTimeUp(true);
+          clearInterval(interval);
+        } else {
+          setRemainingTime(remaining);
+        }
+      }, 1000);
+    }
+    return () => {
+      if (interval) {
+        clearInterval(interval);
+        interval = undefined;
+      }
+    };
+  }, [currentDashOff.duration]);
+
+  useEffect(() => {
     const savedValue = writingContentCache.get(id);
-    console.log(savedValue);
     if (savedValue) {
       setValue(savedValue.markup);
     }
@@ -137,6 +171,12 @@ const Editor = () => {
           type={currentDashOff.type}
           title={currentDashOff.title}
         />
+        {remainingTime !== -1 && (
+          <Timer
+            remainingTime={remainingTime}
+            progress={(remainingTime / (currentDashOff.duration * 1000)) * 100}
+          />
+        )}
         <Paper
           sx={{
             padding: "10px",
@@ -169,6 +209,11 @@ const Editor = () => {
           />
         </Paper>
       </Grid>
+      <TimeUpModal
+        dashOff={currentDashOff || {}}
+        open={timeup}
+        handleClose={() => setTimeUp(false)}
+      />
     </Authenticate>
   );
 };

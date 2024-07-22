@@ -30,4 +30,10 @@ export const writingContentCache = {
     let content = localStorage.getItem(getContentKey(id));
     return content && JSON.parse(content);
   },
+  remove: (id) => {
+    localStorage.removeItem(getContentKey(id));
+  },
 };
+
+export const getTimerSafeNumber = (number) =>
+  number / 10 < 1 ? `0${number}` : number;

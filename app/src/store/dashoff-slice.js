@@ -14,6 +14,7 @@ const formatCurrentDashOff = (dashOff) => {
     headline: dashOff.challenge.headline,
     description: dashOff.challenge.description,
     createdAt: dashOff.dashOff.createdAt,
+    challengeId: dashOff.challenge._id,
   };
 };
 
