@@ -14,6 +14,7 @@ import TimeUpModal from "../../components/TimeUpModal/index.jsx";
 import Timer from "../../components/Timer/index.jsx";
 import Expired from "./Expired.jsx";
 import EditorTools from "../../components/EditorTools/index.jsx";
+import { REDIRECT_COMPLETED_DASHOFFS } from "../../utils/constants.js";
 
 const Editor = () => {
   const [value, setValue] = useState("");
@@ -167,7 +168,12 @@ const Editor = () => {
       ["clean"],
     ],
   };
-
+  if (
+    currentDashOff.id &&
+    REDIRECT_COMPLETED_DASHOFFS.includes(currentDashOff.status)
+  ) {
+    //TODO: Redirect to results screen
+  }
   if (!currentDashOff.id || currentDashOff.status == "EXPIRED") {
     return <Expired />;
   }
