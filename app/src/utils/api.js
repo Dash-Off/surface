@@ -72,7 +72,7 @@ export const fetchCurrentDashOff =
   (id, readOnly = false) =>
   (dispatch) => {
     return api
-      .get(getURL(`/myDashOffs/${id}`))
+      .get(getURL(`/myDashOffs/${id}` + (readOnly ? "?view=1" : "")))
       .then(({ data }) => {
         if (readOnly) {
           dispatch(loadCurrentViewDashOff(data));
@@ -133,7 +133,7 @@ export const publishDashOff = (id, publish) => (dispatch) => {
   return api
     .patch(getURL(`/myDashOffs/${id}`), { public: publish, dash_off_id: id })
     .then(({ data }) => {
-      dispatch(fetchCurrentDashOff(id, true));
+      dispatch(fetchCurrentDashOff(id));
       toast(`${publish ? "Published" : "Archived"} DashOff !`);
     })
     .catch((err) => {

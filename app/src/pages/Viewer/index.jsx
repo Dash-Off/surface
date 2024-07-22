@@ -1,45 +1,31 @@
-import { useEffect, useRef } from "react";
-import Authenticate from "../../components/Authenticate/index.jsx";
+import { useEffect } from "react";
 import { useParams } from "react-router-dom";
 import { fetchCurrentDashOff } from "../../utils/api";
 import { useDispatch, useSelector } from "react-redux";
-import { getCurrent } from "../../store/dashoff-slice";
-import { getUser } from "../../store/user-slice.js";
+import { getView } from "../../store/dashoff-slice";
 import ReactQuill from "react-quill";
 import { Grid, Paper, Typography, Avatar, Tooltip, Chip } from "@mui/material";
+import { getRandomHexColor } from "../../utils/helper";
 import Expired from "../Editor/Expired.jsx";
-import { COMPLETED_DASHOFFS_STATES } from "../../utils/constants.js";
-import Score from "../../components/Score/index.jsx";
-import DashOffMenuBar from "../../components/DashOffMenuBar/index.jsx";
-import { getRandomHexColor } from "../../utils/helper.js";
+import Navbar from "../../components/Navbar/Navbar.jsx";
 
-const DashOff = () => {
+const Viewer = () => {
   const { id } = useParams();
   const dispatch = useDispatch();
-  const editorRef = useRef(null);
-  const currentDashOff = useSelector(getCurrent());
-  const user = useSelector(getUser());
+  const currentDashOff = useSelector(getView());
   useEffect(() => {
     if (!currentDashOff.id) {
-      dispatch(fetchCurrentDashOff(id));
+      dispatch(fetchCurrentDashOff(id, true));
     }
   }, [id]);
 
-  if (
-    !currentDashOff ||
-    !COMPLETED_DASHOFFS_STATES.includes(
-      currentDashOff && currentDashOff.status,
-    ) ||
-    !currentDashOff.isOwner
-  ) {
+  if (!currentDashOff.id) {
     return <Expired />;
   }
 
   return (
-    <Authenticate>
-      <DashOffMenuBar dashOff={currentDashOff} />
-      <br />
-      <br />
+    <Grid>
+      <Navbar size="small" />
       <Grid
         display={"flex"}
         justifyContent={"space-around"}
@@ -49,11 +35,11 @@ const DashOff = () => {
         <Paper
           sx={{
             padding: "10px",
-            height: "90vh",
-            minWidth: "52%",
+            minHeight: "90vh",
+            minWidth: "80%",
             overflowY: "auto",
           }}
-          variant="outlined"
+          //variant="outlined"
           elevation={2}
         >
           <Typography
@@ -65,13 +51,11 @@ const DashOff = () => {
           </Typography>
           <ReactQuill
             id="viewer"
-            ref={editorRef}
-            value={currentDashOff.raw}
+            value={currentDashOff.markup}
             readOnly
             theme="bubble"
           />
         </Paper>
-        <Score dashOff={currentDashOff} />
       </Grid>
       <Grid sx={{ position: "fixed", bottom: "2vh", right: "2vw" }}>
         <Tooltip title="Author" arrow placement="top">
@@ -86,16 +70,16 @@ const DashOff = () => {
                 }}
               >
                 <Typography sx={{ fontSize: "10px", color: "white" }}>
-                  {(user && user.name[0]) || "A"}
+                  {(currentDashOff.author && currentDashOff.author[0]) || "A"}
                 </Typography>
               </Avatar>
             }
-            label={(user && user.name) || "Anonymous"}
+            label={currentDashOff.author || "Anonymous"}
           />
         </Tooltip>
       </Grid>
-    </Authenticate>
+    </Grid>
   );
 };
 
-export default DashOff;
+export default Viewer;

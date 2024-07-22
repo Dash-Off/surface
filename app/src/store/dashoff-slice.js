@@ -5,7 +5,7 @@ const initiateState = {
   currentView: {},
 };
 
-const formatCurrentDashOff = (dashOff, readAble = false) => {
+const formatCurrentDashOff = (dashOff) => {
   if (dashOff.type != "Owner") return {};
 
   return {
@@ -38,7 +38,7 @@ export const dashOffSlice = createSlice({
     loadCurrentViewDashOff: (state, action) => {
       return {
         ...state,
-        currentView: formatCurrentDashOff(action.payload, true),
+        currentView: action.payload,
       };
     },
   },
@@ -50,7 +50,7 @@ export const { loadCurrentDashOff, loadCurrentViewDashOff } =
 export const getCurrent = () => {
   return (state) => state.dashOff.current;
 };
-export const getCurrentView = () => {
+export const getView = () => {
   return (state) => state.dashOff.currentView;
 };
 
