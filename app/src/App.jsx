@@ -6,8 +6,8 @@ import theme from "./theme.js";
 import { CssBaseline } from "@mui/material";
 
 import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
-import Home from "./pages/Home";
-import Test from "./pages/Test/Test";
+import Home from "./pages/Home/index.jsx";
+import Test from "./pages/Test/Test.jsx";
 import Auth from "./pages/Auth/Auth.jsx";
 import Dashboard from "./pages/Dashboard/Dashboard.jsx";
 import Dashboard1 from "./pages/Dashboard/Dashboard1.jsx";
