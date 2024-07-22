@@ -25,7 +25,7 @@ const Expired = () => {
             <Typography variant="h3">Invalid Link</Typography>
           </Fade>
           <Fade in timeout={3000}>
-            <Typography sx={{ mt: "12px", fontSize:"14px" }} component="div">
+            <Typography sx={{ mt: "12px", fontSize: "14px" }} component="div">
               Seems like you followed an invalid path, <br /> Click the button
               below to go to home
             </Typography>
