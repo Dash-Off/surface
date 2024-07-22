@@ -12,6 +12,8 @@ import debounce from "lodash/debounce";
 import moment from "moment";
 import TimeUpModal from "../../components/TimeUpModal/index.jsx";
 import Timer from "../../components/Timer/index.jsx";
+import Expired from "./Expired.jsx";
+import EditorTools from "../../components/EditorTools/index.jsx";
 
 const Editor = () => {
   const [value, setValue] = useState("");
@@ -67,25 +69,27 @@ const Editor = () => {
     if (!currentDashOff.id) {
       dispatch(fetchCurrentDashOff(id));
     } else {
-      quillEditor = editorRef.current.getEditor();
-      const editorElem = quillEditor.root;
-      adjustScrollOnDelete = () => {
-        setTimeout(() => {
-          // Delay scrolling to ensure content update
-          const padding = 100; // Set the padding value
-          const editorHeight = editorElem.clientHeight;
-          const scrollHeight = editorElem.scrollHeight;
-          const scrollTop = editorElem.scrollTop;
+      if (editorRef.current) {
+        quillEditor = editorRef.current.getEditor();
+        const editorElem = quillEditor.root;
+        adjustScrollOnDelete = () => {
+          setTimeout(() => {
+            // Delay scrolling to ensure content update
+            const padding = 100; // Set the padding value
+            const editorHeight = editorElem.clientHeight;
+            const scrollHeight = editorElem.scrollHeight;
+            const scrollTop = editorElem.scrollTop;
 
-          if (scrollHeight - scrollTop - editorHeight < padding) {
-            editorElem.scrollTop = scrollHeight;
-          }
-        }, 0);
-      };
-      editorElem.addEventListener("copy", preventCopyPaste);
-      editorElem.addEventListener("cut", preventCopyPaste);
-      editorElem.addEventListener("paste", preventCopyPaste);
-      quillEditor.on("text-change", adjustScrollOnDelete);
+            if (scrollHeight - scrollTop - editorHeight < padding) {
+              editorElem.scrollTop = scrollHeight;
+            }
+          }, 0);
+        };
+        editorElem.addEventListener("copy", preventCopyPaste);
+        editorElem.addEventListener("cut", preventCopyPaste);
+        editorElem.addEventListener("paste", preventCopyPaste);
+        quillEditor.on("text-change", adjustScrollOnDelete);
+      }
     }
     document.addEventListener("mousemove", showHeading);
 
@@ -98,7 +102,7 @@ const Editor = () => {
       }
       document.removeEventListener("mousemove", showHeading);
     };
-  }, []);
+  }, [id]);
 
   useEffect(() => {
     let interval = undefined;
@@ -156,6 +160,10 @@ const Editor = () => {
     ],
   };
 
+  if (!currentDashOff.id || currentDashOff.status == "EXPIRED") {
+    return <Expired />;
+  }
+
   return (
     <Authenticate>
       <Grid
@@ -208,6 +216,7 @@ const Editor = () => {
             theme="bubble"
           />
         </Paper>
+        <EditorTools dashOffId={currentDashOff.id} />
       </Grid>
       <TimeUpModal
         dashOff={currentDashOff || {}}

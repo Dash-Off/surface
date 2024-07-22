@@ -60,7 +60,7 @@ export const saveDashOff = (content, cb) => {
       if (cb) cb();
     })
     .catch((err) => {
-      //toast.error("Failed to save dashoff");
+      if (cb) toast.error("Failed to save dashoff");
       console.log("Failed to upload latest content");
     });
 };
@@ -97,4 +97,25 @@ export const expireDashOff = (id, challengeId) => (dispatch) => {
     .catch((err) => {
       toast("Failed to restart dashoff try later...");
     });
+};
+
+export const completeDashOff = (id) => (dispatch) => {
+  const complete = async () => {
+    return api
+      .patch(getURL(`/completeDashOff`), { dash_off_id: id })
+      .then(({ data }) => {
+        dispatch(loadCurrentDashOff({}));
+        window.location.href = "/dashboard1";
+      })
+      .catch((e) => {
+        toast.error("Action failed, please retry after sometime...");
+      });
+  };
+  return saveDashOff(
+    {
+      dash_off_id: id,
+      ...writingContentCache.get(id),
+    },
+    complete,
+  );
 };

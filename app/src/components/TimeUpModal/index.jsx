@@ -17,21 +17,13 @@ const style = {
   p: 4,
 };
 
-const TimeUpModal = ({ dashOff, open, handleClose }) => {
-  const navigate = useNavigate();
+const TimeUpModal = ({ dashOff, open }) => {
   const dispatch = useDispatch();
   const handleRestart = () => {
     dispatch(api.expireDashOff(dashOff.id, dashOff.challengeId));
   };
   const saveAndExit = () => {
-    const cb = () => navigate("/dashboard1");
-    api.saveDashOff(
-      {
-        dash_off_id: dashOff.id,
-        ...writingContentCache.get(dashOff.id),
-      },
-      cb,
-    );
+    dispatch(api.completeDashOff(dashOff.id));
   };
   return (
     <Modal
