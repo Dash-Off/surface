@@ -69,6 +69,14 @@ const Editor = () => {
     if (!currentDashOff.id) {
       dispatch(fetchCurrentDashOff(id));
     } else {
+      if (currentDashOff.raw && !writingContentCache.get(id)) {
+        // Update stale cache
+        writingContentCache.save(
+          currentDashOff.id,
+          currentDashOff.raw,
+          currentDashOff.markup,
+        );
+      }
       if (editorRef.current) {
         quillEditor = editorRef.current.getEditor();
         const editorElem = quillEditor.root;
