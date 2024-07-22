@@ -55,6 +55,10 @@
   outline: none; /* Remove outline when editor is focused */
 }
 
+#viewer .ql-editor {
+  font-size: 15px;
+}
+
 #editor  .ql-editor {
   min-height: 4vh; /* Optional: Set a minimum height */
   overflow-y: hidden; /* Hide vertical scrollbar */

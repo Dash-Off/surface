@@ -1,6 +1,9 @@
 import axios from "axios";
 import { toast } from "react-toastify";
-import { loadCurrentDashOff } from "../store/dashoff-slice";
+import {
+  loadCurrentDashOff,
+  loadCurrentViewDashOff,
+} from "../store/dashoff-slice";
 import { writingContentCache } from "./helper";
 
 const HOST_URL = "http://localhost:3000/api/v1";
@@ -65,16 +68,22 @@ export const saveDashOff = (content, cb) => {
     });
 };
 
-export const fetchCurrentDashOff = (id) => (dispatch) => {
-  return api
-    .get(getURL(`/myDashOffs/${id}`))
-    .then(({ data }) => {
-      dispatch(loadCurrentDashOff(data));
-    })
-    .catch((err) => {
-      // handle if required
-    });
-};
+export const fetchCurrentDashOff =
+  (id, readOnly = false) =>
+  (dispatch) => {
+    return api
+      .get(getURL(`/myDashOffs/${id}`))
+      .then(({ data }) => {
+        if (readOnly) {
+          dispatch(loadCurrentViewDashOff(data));
+        } else {
+          dispatch(loadCurrentDashOff(data));
+        }
+      })
+      .catch((err) => {
+        // handle if required
+      });
+  };
 
 export const expireDashOff = (id, challengeId) => (dispatch) => {
   return api
@@ -118,4 +127,16 @@ export const completeDashOff = (id) => (dispatch) => {
     },
     complete,
   );
+};
+
+export const publishDashOff = (id, publish) => (dispatch) => {
+  return api
+    .patch(getURL(`/myDashOffs/${id}`), { public: publish, dash_off_id: id })
+    .then(({ data }) => {
+      dispatch(fetchCurrentDashOff(id, true));
+      toast(`${publish ? "Published" : "Archived"} DashOff !`);
+    })
+    .catch((err) => {
+      toast("Operation failed, please try later...");
+    });
 };

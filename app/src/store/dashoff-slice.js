@@ -2,22 +2,26 @@ import { createSlice } from "@reduxjs/toolkit";
 
 const initiateState = {
   current: {},
+  currentView: {},
 };
 
-const formatCurrentDashOff = (dashOff) => {
+const formatCurrentDashOff = (dashOff, readAble = false) => {
   if (dashOff.type != "Owner") return {};
+
   return {
     id: dashOff.dashOff._id,
     type: dashOff.dashOff.type,
-    duration: dashOff.challenge.duration,
-    title: dashOff.challenge.name,
-    headline: dashOff.challenge.headline,
-    description: dashOff.challenge.description,
+    duration: dashOff.challenge && dashOff.challenge.duration,
+    title: dashOff.challenge && dashOff.challenge.name,
+    headline: dashOff.challenge && dashOff.challenge.headline,
+    description: dashOff.challenge && dashOff.challenge.description,
     createdAt: dashOff.dashOff.createdAt,
-    challengeId: dashOff.challenge._id,
+    challengeId: dashOff.challenge && dashOff.challenge._id,
     status: dashOff.dashOff.status,
     markup: dashOff.dashOff.markup,
     raw: dashOff.dashOff.raw,
+    public: dashOff.dashOff.public,
+    isOwner: dashOff.type == "Owner",
   };
 };
 
@@ -31,13 +35,23 @@ export const dashOffSlice = createSlice({
         current: formatCurrentDashOff(action.payload),
       };
     },
+    loadCurrentViewDashOff: (state, action) => {
+      return {
+        ...state,
+        currentView: formatCurrentDashOff(action.payload, true),
+      };
+    },
   },
 });
 
-export const { loadCurrentDashOff } = dashOffSlice.actions;
+export const { loadCurrentDashOff, loadCurrentViewDashOff } =
+  dashOffSlice.actions;
 
 export const getCurrent = () => {
   return (state) => state.dashOff.current;
+};
+export const getCurrentView = () => {
+  return (state) => state.dashOff.currentView;
 };
 
 export default dashOffSlice.reducer;

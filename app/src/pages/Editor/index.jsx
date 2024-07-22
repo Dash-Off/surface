@@ -1,6 +1,6 @@
 import { useEffect, useState, useRef } from "react";
 import Authenticate from "../../components/Authenticate/index.jsx";
-import { useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import { fetchCurrentDashOff, saveDashOff } from "../../utils/api";
 import { useDispatch, useSelector } from "react-redux";
 import { getCurrent } from "../../store/dashoff-slice";
@@ -14,7 +14,7 @@ import TimeUpModal from "../../components/TimeUpModal/index.jsx";
 import Timer from "../../components/Timer/index.jsx";
 import Expired from "./Expired.jsx";
 import EditorTools from "../../components/EditorTools/index.jsx";
-import { REDIRECT_COMPLETED_DASHOFFS } from "../../utils/constants.js";
+import { COMPLETED_DASHOFFS_STATES } from "../../utils/constants.js";
 
 const Editor = () => {
   const [value, setValue] = useState("");
@@ -25,6 +25,7 @@ const Editor = () => {
 
   const { id } = useParams();
   const dispatch = useDispatch();
+  const navigate = useNavigate();
   const editorRef = useRef(null);
   const timeoutRef = useRef(null);
   const maintimeoutRef = useRef(null);
@@ -170,9 +171,9 @@ const Editor = () => {
   };
   if (
     currentDashOff.id &&
-    REDIRECT_COMPLETED_DASHOFFS.includes(currentDashOff.status)
+    COMPLETED_DASHOFFS_STATES.includes(currentDashOff.status)
   ) {
-    //TODO: Redirect to results screen
+    navigate(`/dashoffs/${currentDashOff.id}`);
   }
   if (!currentDashOff.id || currentDashOff.status == "EXPIRED") {
     return <Expired />;

@@ -14,6 +14,7 @@ import Dashboard1 from "./pages/Dashboard/Dashboard1.jsx";
 import DashboardSlider from "./components/DashboardSlider/DashboardSlider.jsx";
 import Sidebar1 from "./components/Sidebar/Sidebar1.jsx";
 import Editor from "./pages/Editor/index.jsx";
+import DashOff from "./pages/DashOff/index.jsx";
 
 const App = () => {
   const routes = (
@@ -27,6 +28,7 @@ const App = () => {
         <Route path="/slider" exact element={<DashboardSlider />} />
         <Route path="/side" exact element={<Sidebar1 />} />
         <Route path="/space/:id" exact element={<Editor />} />
+        <Route path="/dashoffs/:id" exact element={<DashOff />} />
       </Routes>
     </Router>
   );
