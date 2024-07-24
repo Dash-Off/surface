@@ -43,7 +43,7 @@ const ScoreMeter = ({ score, text, small, description }) => {
           color="textSecondary"
           textAlign={"center"}
         >
-          <Typography fontSize={small ? 20 : 28}>
+          <Typography fontWeight={"bold"} fontSize={small ? 20 : 28}>
             {Math.round(score, 3)}
           </Typography>
           <Typography fontSize={small ? 12 : 18}>{text}</Typography>
