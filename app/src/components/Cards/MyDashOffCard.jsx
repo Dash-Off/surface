@@ -17,7 +17,16 @@ const MyDashOffCard = ({cardTitle, cardHeadline, cardDescription, cardTimeStamp,
             borderRadius: '10px',
             '&:hover': {            
                 // backgroundColor: '#333', // Assuming #333 is the Sidebar1.jsx background color
-                background: 'linear-gradient(135deg, rgba(61, 14, 98, 0.5), rgba(26, 8, 59, 0.5))',
+                background: 'linear-gradient(135deg, rgba(61, 14, 98, 0.5), rgba(26, 8, 59, 0.9))',             
+                '& > *': {
+                color: 'white',
+            },
+            // If you have nested components, you might need to increase specificity
+            '& > * > *>*': {
+                color: 'white',
+            },
+                // backgroundColor: '#9B870C',
+                
             },
             }}            
     >
@@ -30,7 +39,7 @@ const MyDashOffCard = ({cardTitle, cardHeadline, cardDescription, cardTimeStamp,
                     alignItems: 'center',
                     textAlign: 'center',
                     height: '100px',
-                    width: 'auto',                
+                    width: 'auto',                                  
                 }}
             >
                 <Typography variant="h5"

@@ -5,6 +5,8 @@ import MyDashOffCard from '../../components/Cards/MyDashOffCard'
 import { Box, Fade, Grid } from '@mui/material'
 import Divider from '@mui/material/Divider';
 import NoteCard from '../../components/Cards/NoteCard'
+import UserBio from '../../components/UserBio/UserBio'
+import Authenticate from '../../components/Authenticate'
 
 const cards = [{
   title: 'Sample Title',
@@ -60,46 +62,81 @@ const MyDashOff = () => {
 
 
   return (
+    <Authenticate>
     <div style={gradientBgStyle}>
         <ParticleBackground />
         <div className="flex">
           <Sidebar1/>  
-        
+
           <Box
             sx={{
-              marginTop: '20vh',
+              // marginTop: '20vh',
               display: 'flex',
               flexDirection: 'column',
-              alignItems: 'center',
+              // alignItems: 'center',
               justifyContent: 'center',
               width: '100%',
-              height: '60vh',
-            }}
-          >
-            
-            <Fade timeout={1000} appear in>
-              <Box>
-                <Grid container spacing={1}>
-                  {cards.map((card) => {
-                    return (
-                      <Grid item xs={12} sm={6} lg={3}>
-                        <MyDashOffCard
-                          cardTitle={card.title}
-                          cardHeadline={card.headline}
-                          cardDescription={card.description}
-                          cardTimeStamp={card.timeStamp}
-                          cardVisibility={card.visibility}
-                        />
-                      </Grid>
-                    )
-                  })}
-                </Grid>
-              </Box>
-            </Fade>
-          </Box>
+              // height: '60vh',
+              // overflow: 'scroll',
+              // paddingTop: '30vh',
+            }}>
+            <Box
+              sx={{
+                display: 'flex',
+                justifyContent: 'center',
+                alignItems: 'center',
+                textAlign: 'center',
+                height: '200px',
+                width: '100%',
+                marginBottom: '2vh',
+                marginTop: '3vh',
+                paddingLeft: '10vh',
+                paddingRight: '10vh',
+                
+              }}>
+              <UserBio />
+            </Box>
 
-            </div>
+            <Box   
+              className='bo-2'         
+              sx={{
+                // marginTop: '20vh',
+                display: 'flex',
+                flexDirection: 'column',
+                alignItems: 'center',
+                justifyContent: 'center',
+                width: '100%',
+                height: '60vh',
+                overflow: 'scroll',
+                paddingTop: '30vh',
+                paddingLeft: '10vh',
+                paddingRight: '10vh',
+              }}>                        
+                
+                <Fade timeout={1000} appear in>
+                  <Box>
+                    <Grid container spacing={1}>
+                      {cards.map((card) => {
+                        return (
+                          <Grid item xs={12} sm={6} lg={3}>
+                            <MyDashOffCard
+                              cardTitle={card.title}
+                              cardHeadline={card.headline}
+                              cardDescription={card.description}
+                              cardTimeStamp={card.timeStamp}
+                              cardVisibility={card.visibility}
+                            />
+                          </Grid>
+                        )
+                      })}
+                    </Grid>
+                  </Box>
+                </Fade>
+            </Box>
+          </Box>
+          </div>
     </div> 
+    </Authenticate>
   )
 }
 

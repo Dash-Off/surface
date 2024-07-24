@@ -8,6 +8,9 @@ import ParticleBackground from '../../components/ParticleBackground'
 import DashboardSlider from '../../components/DashboardSlider/DashboardSlider';
 import Sidebar1 from '../../components/Sidebar/Sidebar1';
 import WelcomeTitle from '../../components/WelcomeTitle/WelcomeTitle'
+import { useSelector } from 'react-redux'
+import { getUser } from '../../store/user-slice'
+import Authenticate from '../../components/Authenticate'
 
 
 
@@ -91,6 +94,7 @@ const cards = [{
 const Dashboard = () => {
 
   const [activeCard, setActiveCard] = React.useState(cards[0]);
+  const user = useSelector(getUser());
 
   const gradientBgStyle = {
     // background: 'linear-gradient(135deg, #330e62, #1a083b)',
@@ -101,6 +105,7 @@ const Dashboard = () => {
 
 
   return (
+    <Authenticate>
     <div style={gradientBgStyle}>
         <ParticleBackground />
         
@@ -209,6 +214,7 @@ const Dashboard = () => {
                     </Fade>                   
 
                 </Box>
+                
                 <Fade timeout={1000} appear in>
                   <Box>
                     <DashboardSlider activeCard={activeCard} setActiveCard={setActiveCard} cards={cards}/>
@@ -218,6 +224,7 @@ const Dashboard = () => {
             
         </div>
     </div>
+    </Authenticate>
   )
 }
 

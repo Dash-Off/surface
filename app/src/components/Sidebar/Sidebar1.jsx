@@ -19,6 +19,7 @@ import ChevronLeftIcon from '@mui/icons-material/ChevronLeft';
 import ChevronRightIcon from '@mui/icons-material/ChevronRight';
 import LogoutIcon from '@mui/icons-material/Logout'; // Import Logout icon
 import { useNavigate } from "react-router-dom";
+import * as api from '../../utils/api';
 
 
 
@@ -41,7 +42,9 @@ export default function PermanentDrawerLeft() {
     console.log('Logging out...'); // Placeholder for actual logout logic
     // For example, clear user data from local storage and redirect to login page
     localStorage.removeItem('username');
-    navigate('/auth'); // Assuming you're using react-router-dom for navigation
+    const cb = () =>
+    window.location.href = '/auth'; // Assuming you're using react-router-dom for navigation
+    api.logout(cb);
   };
 
   const handleMyDashOff = () => {
@@ -52,12 +55,16 @@ export default function PermanentDrawerLeft() {
     navigate('/dashboard1'); // Assuming you're using react-router-dom for navigation
   };
 
+  const handleProfile= () => {
+    navigate('/my-profile'); // Assuming you're using react-router-dom for navigation
+  };
+
+
   // Define your onClick functions for each list item
   const handleClicks = {
     'Dashboard': handleDashboard,
     'My DashOff': handleMyDashOff,
-    'Option': () => console.log('Option clicked'),
-    'Drafts': () => console.log('Drafts clicked'),
+    'Profile': handleProfile,
   };
 
   const keysList = Object.keys(handleClicks);

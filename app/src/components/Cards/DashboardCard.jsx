@@ -33,6 +33,25 @@ const DashboardCard = ({cardTitle, cardHeadline, cardDescription, cardTimeStamp,
                     <Typography variant="h5">{cardTitle}</Typography>       
                     <Typography variant="body2">{cardHeadline}</Typography> 
                     <Typography variant="body2">{cardTimeStamp}</Typography>
+
+                    <Button variant="outlined"
+                        sx={{
+                            marginTop: '1rem',
+                            padding: '0.1rem',
+                            backgroundColor: 'lightgray',
+                            color: 'black',
+                            // paddingLeft: '2.5rem',
+                            // paddingRight: '2.5rem',
+                            fontWeight: 'bold',
+                            // width: '100%',
+                            '&:hover': {
+                                backgroundColor: 'darkgray',
+                                color: 'black',
+                            }
+                        }}>
+                        Start
+                    </Button>
+
                 </Box>                    
             
             }

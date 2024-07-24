@@ -1,7 +1,11 @@
 import { Fade, Typography } from '@mui/material'
 import React from 'react'
+import { useSelector } from 'react-redux'
+import { useSearchParams } from 'react-router-dom'
+import { getUser } from '../../store/user-slice'
 
 const WelcomeTitle = () => {
+    const user = useSelector(getUser());
 
   return (
     <Fade timeout={1000} appear in>
@@ -16,7 +20,7 @@ const WelcomeTitle = () => {
         }}
             color={"primary"}
         >
-            Welcome,
+            Welcome, {user.name}
         </Typography>
     </Fade>
   )
