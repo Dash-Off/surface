@@ -11,7 +11,10 @@ const formatCurrentDashOff = (dashOff) => {
   return {
     id: dashOff.dashOff._id,
     type: dashOff.dashOff.type,
-    duration: dashOff.challenge && dashOff.challenge.duration,
+    duration:
+      dashOff.challenge && dashOff.challenge._id
+        ? dashOff.challenge.duration
+        : -1,
     title: dashOff.challenge && dashOff.challenge.name,
     headline: dashOff.challenge && dashOff.challenge.headline,
     description: dashOff.challenge && dashOff.challenge.description,

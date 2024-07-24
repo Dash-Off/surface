@@ -117,6 +117,7 @@ const Editor = () => {
   useEffect(() => {
     let interval = undefined;
     let deadLine;
+
     if (currentDashOff && currentDashOff.duration !== -1 && !interval) {
       deadLine = moment(currentDashOff.createdAt).add(
         currentDashOff.duration,
@@ -235,7 +236,7 @@ const Editor = () => {
       </Grid>
       <TimeUpModal
         dashOff={currentDashOff || {}}
-        open={timeup}
+        open={remainingTime !== -1 && timeup}
         handleClose={() => setTimeUp(false)}
       />
     </Authenticate>

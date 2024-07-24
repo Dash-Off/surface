@@ -66,7 +66,7 @@ const DashOff = () => {
           <ReactQuill
             id="viewer"
             ref={editorRef}
-            value={currentDashOff.raw}
+            value={currentDashOff.markup}
             readOnly
             theme="bubble"
           />
