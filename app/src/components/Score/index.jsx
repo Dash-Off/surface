@@ -1,6 +1,7 @@
 import { Box, Typography, Skeleton, Grid } from "@mui/material";
 import { OWNER_ROLE } from "../../utils/constants";
 import TimelapseIcon from "@mui/icons-material/Timelapse";
+
 const Score = ({ dashOff }) => {
   if (!dashOff || dashOff.type !== OWNER_ROLE) {
     //return null;

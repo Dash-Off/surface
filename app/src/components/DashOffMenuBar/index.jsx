@@ -43,7 +43,7 @@ const DashOffMenuBar = ({ dashOff }) => {
         left: 0,
       }}
       justifyContent={"space-between"}
-      padding="8px 12px"
+      padding="18px 24px"
     >
       <div>
         <Tooltip title="My DashOffs Page" arrow placement="bottom">

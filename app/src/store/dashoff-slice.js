@@ -25,6 +25,7 @@ const formatCurrentDashOff = (dashOff) => {
     raw: dashOff.dashOff.raw,
     public: dashOff.dashOff.public,
     isOwner: dashOff.type == "Owner",
+    scores: dashOff.scores,
   };
 };
 
