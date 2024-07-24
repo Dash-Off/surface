@@ -1,9 +1,12 @@
-import { Grid } from "@mui/material";
+import { Grid, Typography } from "@mui/material";
 import ScoreMeter from "./ScoreMeter.jsx";
 
 const ScorePane = (scores) => {
   return (
     <Grid>
+      <Typography mb="20px" variant="h6" ml="8px">
+        Your Scores:
+      </Typography>
       <ScoreMeter
         score={scores.scores.overallScore}
         text={"OverAll"}
