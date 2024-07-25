@@ -26,16 +26,12 @@ const Slider = (props) => {
         swiper.slides.forEach(slide => {
             slide.style.opacity = 0.8; // Set all slides to opacity 0.5
         });
-        swiper.slides[swiper.activeIndex].style.opacity = 1; // Set active slide to full opacity
-        // console.log('swiper.slides[swiper.activeIndex] : ', swiper.slides[swiper.activeIndex])
+        swiper.slides[swiper.activeIndex].style.opacity = 1; // Set active slide to full opacity        
 
         const activeSlide = swiper.slides[swiper.activeIndex];
         console.log('activeSlide : ', activeSlide)
         props.setActiveCard(props.cards[swiper.activeIndex]);
         console.log('props.cards : ', props.cards)
-        // const dashboardCard = activeSlide.querySelector('DashboardCard'); // Adjust the selector as needed
-        // const cardDescription = dashboardCard.getAttribute('data-card-description');
-        // console.log('dashboardCard : ', dashboardCard)
     };
 
   return (
@@ -66,7 +62,6 @@ const Slider = (props) => {
         >   
          {
             props.cards.map((card) => {    
-                console.log('card : ', card)
                 return (
                     <SwiperSlide
                         style={{
@@ -84,6 +79,7 @@ const Slider = (props) => {
                             cardHeadline = {card.headline}
                             cardDescription={card.description}
                             cardTimeStamp={card.timeStamp}
+                            cardVisibility={card.visibility}
                         />
                     </SwiperSlide>
                 )
@@ -95,11 +91,8 @@ const Slider = (props) => {
             <div className="slider-controller">
                 <div className="swiper-button-prev slider-arrow">
                 </div>
-
                 <div className="swiper-button-next slider-arrow">
-                </div>
-
-               
+                </div>               
             </div>
 
         </Swiper>

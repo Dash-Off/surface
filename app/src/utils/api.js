@@ -140,3 +140,19 @@ export const publishDashOff = (id, publish) => (dispatch) => {
       toast("Operation failed, please try later...");
     });
 };
+
+export const logout = (cb) => {
+  return api
+    .post("/auth/logout")
+    .then(({ data }) => {
+      console.log(data);
+      cb();
+    })
+    .catch((err) => {
+      console.log(err);
+      toast(
+        (err && err.response && err.response.data.message) ||
+          "Error: Logout failed, Please try again",
+      );
+    });
+};

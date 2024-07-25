@@ -16,6 +16,8 @@ import Sidebar1 from "./components/Sidebar/Sidebar1.jsx";
 import Editor from "./pages/Editor/index.jsx";
 import DashOff from "./pages/DashOff/index.jsx";
 import Viewer from "./pages/Viewer/index.jsx";
+import MyDashOff from "./pages/MyDashOff/MyDashOff.jsx";
+import Profile from "./pages/Profile/Profile.jsx";
 
 const App = () => {
   const routes = (
@@ -31,6 +33,8 @@ const App = () => {
         <Route path="/space/:id" exact element={<Editor />} />
         <Route path="/dashoffs/:id" exact element={<DashOff />} />
         <Route path="/dashoffs/:id/preview" exact element={<Viewer />} />
+        <Route path="/my-dashoff" exact element={<MyDashOff />} />
+        <Route path="/my-profile" exact element={<Profile />} />
       </Routes>
     </Router>
   );
