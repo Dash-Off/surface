@@ -38,12 +38,12 @@ const Party = () => {
       interactivity: {
         events: {
           onClick: {
-            enable: true,
+            enable: false,
             mode: "push",
           },
           onHover: {
             enable: true,
-            mode: "attract",
+            // mode: "attract",
           },
         },
         modes: {
@@ -64,7 +64,7 @@ const Party = () => {
           color: "#ffffff",
           distance: 150,
           enable: true,
-          opacity: 0.5,
+          opacity: 0.3,
           width: 1,
         },
         move: {
@@ -74,7 +74,7 @@ const Party = () => {
             default: "bounce",
           },
           random: false,
-          speed: 1,
+          speed: 0.2,
           straight: false,
         },
         number: {

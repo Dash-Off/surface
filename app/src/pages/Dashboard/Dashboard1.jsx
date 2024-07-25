@@ -2,19 +2,25 @@ import React from 'react'
 import Navbar from '../../components/Navbar/Navbar'
 import Sidebar from '../../components/Sidebar/Sidebar'
 import NoteCard from '../../components/Cards/NoteCard'
-import { Box, Fade, Typography } from '@mui/material'
+import { Box, Button, Fade, Typography } from '@mui/material'
 import DashboardCard from '../../components/Cards/DashboardCard'
 import ParticleBackground from '../../components/ParticleBackground'
 import DashboardSlider from '../../components/DashboardSlider/DashboardSlider';
 import Sidebar1 from '../../components/Sidebar/Sidebar1';
+import WelcomeTitle from '../../components/WelcomeTitle/WelcomeTitle'
+import { useSelector } from 'react-redux'
+import { getUser } from '../../store/user-slice'
+import Authenticate from '../../components/Authenticate'
 
 
 
 const cards = [{
   title: 'Sample Title',
   headline: 'This is a long headline Sample Title',
-  description: 'This is a sample description.',
+  description: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Rhoncus dolor purus non enim praesent elementum facilisis leo vel. Risus at ultrices mi tempus imperdiet. Semper risus in hendrerit gravida rutrum quisque non tellus. Convallis convallis tellus id interdum velit laoreet id donec ultrices. Odio morbi quis commodo odio aenean sed adipiscing. Amet nisl suscipit adipiscing bibendum est ultricies integer quis. Cursus euismod quis viverra nibh cras. Metus vulputate eu scelerisque felis imperdiet proin fermentum leo. Mauris commodo quis imperdiet massa tincidunt. Cras tincidunt lobortis feugiat vivamus at augue. At augue eget arcu dictum varius duis at consectetur lorem. Velit sed ullamcorper morbi tincidunt. Lorem donec massa sapien faucibus et molestie ac.Consequat mauris nunc congue nisi vitae suscipit. Fringilla est ullamcorper eget nulla facilisi etiam dignissim diam. Pulvinar elementum integer enim neque volutpat ac tincidunt. Ornare suspendisse sed nisi lacus sed viverra tellus. Purus sit amet volutpat consequat mauris. Elementum eu facilisis sed odio morbi. Euismod lacinia at quis risus sed vulputate odio. Morbi tincidunt ornare massa eget egestas purus viverra accumsan in. In hendrerit gravida rutrum quisque non tellus orci ac. Pellentesque nec nam aliquam sem et tortor. Habitant morbi tristique senectus et. Adipiscing elit duis tristique sollicitudin nibh sit. Ornare aenean euismod elementum nisi quis eleifend. Commodo viverra maecenas accumsan lacus vel facilisis. Nulla posuere sollicitudin aliquam ultrices sagittis orci a.',
   timeStamp: '2023-04-01',
+  duration: '15 mins',
+  visibility : true,
 },
 {
   title: 'Long wood title',
@@ -22,13 +28,73 @@ const cards = [{
   headline: 'This is a long headline Long wood',
   description: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nulla nec purus feugiat',
   timeStamp: '2002-03-01',
-},]
+  duration: '1hr 30 mins',
+  visibility : false,
+},
+  {
+    title: 'Random Title 1',
+    headline: 'This is a random headline 1',
+    description: 'Description for random title 1.',
+    timeStamp: '2024-01-01',
+    duration: '10 mins',
+    visibility: true,
+  },
+  {
+    title: 'Random Title 2',
+    headline: 'This is a random headline 2',
+    description: 'Description for random title 2.',
+    timeStamp: '2024-02-01',
+    duration: '20 mins',
+    visibility: false,
+  },
+  {
+    title: 'Random Title 3',
+    headline: 'This is a random headline 3',
+    description: 'Description for random title 3.',
+    timeStamp: '2024-03-01',
+    duration: '30 mins',
+    visibility: true,
+  },
+  {
+    title: 'Random Title 4',
+    headline: 'This is a random headline 4',
+    description: 'Description for random title 4.',
+    timeStamp: '2024-04-01',
+    duration: '40 mins',
+    visibility: false,
+  },
+  {
+    title: 'Random Title 5',
+    headline: 'This is a random headline 5',
+    description: 'Description for random title 5.',
+    timeStamp: '2024-05-01',
+    duration: '50 mins',
+    visibility: true,
+  },
+  {
+    title: 'Random Title 6',
+    headline: 'This is a random headline 6',
+    description: 'Description for random title 6.',
+    timeStamp: '2024-06-01',
+    duration: '60 mins',
+    visibility: false,
+  },
+  {
+    title: 'Random Title 7',
+    headline: 'This is a random headline 7',
+    description: 'Description for random title 7.',
+    timeStamp: '2024-07-01',
+    duration: '70 mins',
+    visibility: true,
+  },
+]
 
 
 
 const Dashboard = () => {
 
   const [activeCard, setActiveCard] = React.useState(cards[0]);
+  const user = useSelector(getUser());
 
   const gradientBgStyle = {
     // background: 'linear-gradient(135deg, #330e62, #1a083b)',
@@ -39,93 +105,126 @@ const Dashboard = () => {
 
 
   return (
+    <Authenticate>
     <div style={gradientBgStyle}>
         <ParticleBackground />
-        <Sidebar1/>  
+        
         <div className="flex">
-            {/* <Sidebar /> */} 
+          <Sidebar1/>  
             <Box className='container mx-auto'>
-            
-                <Box>
-                  <Fade timeout={1000} appear in>
-                    <Typography
-                        className='title'
-                        sx={{
-                            fontSize: { xs: "15px", sm: "25px", lg: "60px" },
-                            textAlign: { xs: "left", sm: "left", lg: "left" },
-                            fontWeight: "bold",
-                            color: "white",
-                        }}
-                        color={"primary"}
-                        variant="h1"
-                        >
-                        <strong>{activeCard.title}</strong>
-                        </Typography>
+
+              <WelcomeTitle />
+              
+              <Box
+                sx={{
+                  display: 'flex',
+                  flexDirection: 'column',
+                  alignItems: 'center',
+                  justifyContent: 'center',
+                  width: '100%',
+                  height: '60vh',
+                }}
+              >
+
+                    <Fade timeout={1000} appear in>
+                      <Typography
+                          className='title'
+                          sx={{
+                              paddingTop: { xs: "10px", sm: "10px", lg: "10px" },
+                              fontSize: { xs: "15px", sm: "25px", lg: "60px" },
+                              textAlign: { xs: "left", sm: "left", lg: "left" },
+                              fontWeight: "bold",
+                              color: "white",
+                          }}
+                          color={"primary"}
+                          variant="h1"
+                          >
+                          <strong>{activeCard.title}</strong>
+                          </Typography>
                     </Fade>
 
                     <Fade timeout={1000} appear in>
-                    <Typography
-                        className='headline'
-                        sx={{
-                            fontSize: { xs: "15px", sm: "25px", lg: "30px" },
-                            textAlign: { xs: "left", sm: "left", lg: "left" },
-                            fontWeight: "bold",
-                            color: "#808080",
-                        }}
-                        color={"primary"}
-                        variant="h3"
-                        >
-                        activeCard.headline
-                        </Typography>
+                      <Typography
+                          className='headline'
+                          sx={{
+                              paddingTop: { xs: "10px", sm: "10px", lg: "10px" },
+                              fontSize: { xs: "15px", sm: "25px", lg: "30px" },
+                              textAlign: { xs: "left", sm: "left", lg: "left" },
+                              fontWeight: "bold",
+                              color: "#808080",
+                          }}
+                          color={"primary"}
+                          variant="h3"
+                          >
+                          {activeCard.headline}
+                          </Typography>
                     </Fade>
 
                     <Fade timeout={1000} appear in>
-                    <Typography
-                        className='timestamp'
-                        sx={{
-                            fontSize: { xs: "15px", sm: "25px", lg: "15px" },
-                            textAlign: { xs: "left", sm: "left", lg: "left" },
-                            fontWeight: "bold",
-                            opacity: 0.0,
-                        }}
-                        color={"primary"}
-                        variant="h3"
-                        >
-                        <strong>Started On :</strong> 12th October 2023
-                        </Typography>
+                      <Typography
+                          className='timestamp'
+                          sx={{
+                            paddingTop: { xs: "10px", sm: "10px", lg: "10px" },
+                              fontSize: { xs: "15px", sm: "25px", lg: "15px" },
+                              textAlign: { xs: "left", sm: "left", lg: "left" },
+                              fontWeight: "bold",
+                              opacity: 0.0,
+                              
+                          }}
+                          color={"primary"}
+                          variant="h3"
+                          >
+                          <strong>Started On :</strong> {activeCard.timeStamp}
+                          </Typography>
                     </Fade>
 
-                    <Box 
+                    <Fade timeout={1000} appear in>
+                      <Typography
+                          className='timestamp'
+                          sx={{
+                            paddingTop: { xs: "10px", sm: "10px", lg: "10px" },
+                              fontSize: { xs: "15px", sm: "25px", lg: "15px" },
+                              textAlign: { xs: "left", sm: "left", lg: "left" },
+                              fontWeight: "bold",
+                              opacity: 0.0,
+                              
+                          }}
+                          color={"primary"}
+                          variant="h3"
+                          >
+                          <strong>Duration taken :</strong> {activeCard.duration}
+                          </Typography>
+                    </Fade>
+
+                    <Fade>
+                      <Button
+                        className='start-btn'
                         sx={{
-                          width: "40vw",
-                          paddingTop: "20px",
+                          marginTop: "20px",
+                          padding: "10px 20px",
+                          fontSize: "20px",
+                          fontWeight: "bold",
+                          borderRadius: "10px",
+                          backgroundColor: "#FFD700",
+                          color: "black",
+                          opacity: 0.9,
+                          visibility: 'visible',
                         }}
-                      >
-                        <Fade timeout={1000} appear in>
-                          <Typography
-                            className='description'
-                            sx={{
-                                fontSize: { xs: "15px", sm: "25px", lg: "12px" },
-                                textAlign: { xs: "left", sm: "left", lg: "left" },
-                                fontWeight: "bold",
-                                // color: "#808080",
-                            }}
-                            color={"primary"}
-                            >
-                            {/* /In a small, isolated village nestled between ancient, whispering forests and towering, mist-covered mountains, the villagers are haunted by an enigmatic phenomenon. Every night, at precisely midnight, the sky above the village lights up with a brilliant, shimmering aurora, despite it being far from the polar regions. The villagers believe the aurora is a sign from the old gods, but no one knows why it appears or what it signifies.\nOne night, you, a young and curious villager with a knack for unraveling mysteries, notice something peculiar: the aurora seems to be forming patterns and symbols in the sky. Driven by an insatiable curiosity and a desire to protect your village, you decide to embark on a journey to decipher these celestial messages.\nAs you venture into the heart of the forest and up the treacherous mountains, you encounter mystical creatures, forgotten legends, and hidden realms. Along the way, */}
-                            {activeCard.description}
-                            </Typography>
-                        </Fade>
-                      </Box>  
-                  </Box>
+                      > Start </Button>
+                    </Fade>                   
+
+                </Box>
                 
-
-                  <DashboardSlider activeCard={activeCard} setActiveCard={setActiveCard} cards={cards}/>
-
+                <Fade timeout={1000} appear in>
+                  <Box>
+                    <DashboardSlider activeCard={activeCard} setActiveCard={setActiveCard} cards={cards}/>
+                  </Box>
+                </Fade>
             </Box>
             
         </div>
     </div>
+    </Authenticate>
   )
 }
 
