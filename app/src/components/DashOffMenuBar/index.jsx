@@ -21,7 +21,7 @@ const DashOffMenuBar = ({ dashOff }) => {
     setShowShare(true);
   };
   const handleBackClick = () => {
-    navigate("/dashboard");
+    navigate(-1);
   };
   const preview = () => {
     window.open(
