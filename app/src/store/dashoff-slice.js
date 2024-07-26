@@ -10,6 +10,30 @@ const initiateState = {
 
 const formatCurrentDashOff = (dashOff) => {
   if (dashOff.type != "Owner") return {};
+  let corrections = {};
+  if (dashOff.scores && dashOff.scores.corrections) {
+    dashOff.scores.corrections.forEach((correction) => {
+      if (!corrections[correction["actual"]]) {
+        corrections[correction["actual"]] = {
+          isSentiment: false,
+          isReadDiff: false,
+          suggestions: [],
+          actual: correction["actual"],
+        };
+      }
+      if (correction["correctionType"] === "SENTI") {
+        corrections[correction["actual"]].isSentiment = true;
+      }
+      if (correction["correctionType"] === "READ") {
+        corrections[correction["actual"]].isReadDiff = true;
+      }
+      if (correction["correctionType"] === "GRAMMAR") {
+        corrections[correction["actual"]]["suggestions"].push(
+          correction["suggestion"],
+        );
+      }
+    });
+  }
 
   return {
     id: dashOff.dashOff._id,
@@ -29,6 +53,7 @@ const formatCurrentDashOff = (dashOff) => {
     public: dashOff.dashOff.public,
     isOwner: dashOff.type == "Owner",
     scores: dashOff.scores,
+    corrections: corrections,
   };
 };
 

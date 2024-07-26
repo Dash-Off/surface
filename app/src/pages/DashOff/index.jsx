@@ -1,4 +1,4 @@
-import { useEffect, useRef } from "react";
+import { useEffect, useRef, useState } from "react";
 import Authenticate from "../../components/Authenticate/index.jsx";
 import { useParams } from "react-router-dom";
 import { fetchCurrentDashOff } from "../../utils/api";
@@ -12,6 +12,7 @@ import {
   COMPLETED_DASHOFFS_STATES,
   INSERT_COLOR,
   SENTIMENT_SPIKE_COLOR,
+  READ_DIFFICULT,
   UPDATE_COLOR,
 } from "../../utils/constants.js";
 import Score from "../../components/Score/index.jsx";
@@ -25,61 +26,104 @@ const DashOff = () => {
   const dispatch = useDispatch();
   const editorRef = useRef(null);
   const currentDashOff = useSelector(getCurrent());
+  const [correcting, setCorrecting] = useState(false);
   const user = useSelector(getUser());
-  const highlightText = (quill, scores) => {
+  const highlightText = (quill, corrections) => {
+    if (correcting) {
+      // Aquire lock to avoid multiple corrections
+      return;
+    } else {
+      setCorrecting(true);
+    }
+    console.log("Starting correction...")
     quill.formatText(0, quill.getLength(), "background", "white"); // reset highlights
-    scores.corrections.map((correction) => {
-      if (correction["correctionType"] == "SENTI") {
-        let sentence = correction["actual"];
-        const sentenceIndex = quill.getText().indexOf(sentence);
-        quill.formatText(
-          sentenceIndex,
-          sentenceIndex + sentence.length,
-          "background",
-          SENTIMENT_SPIKE_COLOR,
-        );
-      } else if (correction["correctionType"] == "GRAMMAR") {
-        let sentence = correction["actual"];
-        const sentenceIndex = quill.getText().indexOf(sentence);
-        const suggestion = correction["suggestion"];
-        const wordIndex = sentence.indexOf(
-          suggestion["actual"],
-          suggestion["pos"],
-        );
-        const replacement = suggestion["replacement"];
-        if (suggestion["actual"] === "") {
-          let word = sentence.split(" ")[suggestion["pos"] + 1];
-          quill.insertText(
-            sentenceIndex + sentence.indexOf(word),
-            replacement + " ",
-            {
-              color: INSERT_COLOR,
-            },
-          );
-        } else if (replacement === "") {
-          quill.deleteText(sentenceIndex + wordIndex, replacement.word);
-        } else {
-          quill.deleteText(
-            sentenceIndex + wordIndex,
-            suggestion["actual"].length,
-          );
-          quill.insertText(sentenceIndex + wordIndex, replacement, {
-            color: UPDATE_COLOR,
-          });
-        }
+    Object.keys(corrections).map((sentence) => {
+      let tempSentence = sentence;
+      const sentenceIndex = quill.getText().indexOf(sentence);
+      const correction = corrections[sentence];
+      let bg = null;
+      if (correction.isSenti) {
+        bg = SENTIMENT_SPIKE_COLOR;
       }
+      if (correction.isReadDiff) {
+        bg = READ_DIFFICULT;
+      }
+      const corrected = [];
+      correction.suggestions.map((suggestion) => {
+        if (
+          !corrected.includes(
+            `${suggestion["actual"]},${suggestion["pos"]}, ${suggestion["replacement"]}`,
+          )
+        ) {
+          const wordIndex = tempSentence.indexOf(
+            suggestion["actual"],
+            suggestion["pos"],
+          );
+          const replacement = suggestion["replacement"];
+          if (suggestion["actual"] === "") {
+            let word = tempSentence.split(" ")[suggestion["pos"] + 1];
+            quill.insertText(
+              sentenceIndex + tempSentence.indexOf(word),
+              replacement + " ",
+              {
+                color: INSERT_COLOR,
+              },
+            );
+            tempSentence =
+              tempSentence.slice(0, tempSentence.indexOf(word)) +
+              replacement +
+              " " +
+              tempSentence.slice(tempSentence.indexOf(word));
+          } else if (replacement === "") {
+            let word = tempSentence.split(" ")[suggestion["pos"] + 1];
+            quill.deleteText(
+              sentenceIndex + tempSentence.indexOf(word),
+              suggestion["actual"].length,
+            );
+            tempSentence =
+              tempSentence.slice(0, tempSentence.indexOf(word)) +
+              tempSentence.slice(tempSentence.indexOf(word) + word.length);
+          } else {
+            quill.deleteText(
+              sentenceIndex + wordIndex,
+              suggestion["actual"].length,
+            );
+            tempSentence =
+              tempSentence.slice(0, wordIndex) +
+              tempSentence.slice(wordIndex + suggestion["actual"].length);
+            quill.insertText(sentenceIndex + wordIndex, replacement, {
+              color: UPDATE_COLOR,
+            });
+            tempSentence =
+              tempSentence.slice(0, wordIndex) +
+              replacement +
+              tempSentence.slice(wordIndex);
+          }
+          corrected.push(
+            `${suggestion["actual"]},${suggestion["pos"]}, ${suggestion["replacement"]}`,
+          );
+        }
+
+      });
+      quill.formatText(sentenceIndex, tempSentence.length, "background", bg);
     });
+    setCorrecting(false);
+    console.log("Completed correction...")
   };
 
   useEffect(() => {
     let quillEditor;
-    if (currentDashOff.id && editorRef.current && currentDashOff.scores) {
+    if (
+      currentDashOff.id &&
+      editorRef.current &&
+      Object.keys(currentDashOff.corrections).length
+    ) {
       quillEditor = editorRef.current.getEditor();
-      highlightText(quillEditor, currentDashOff.scores);
+      highlightText(quillEditor, currentDashOff.corrections);
     }
-  });
+  }, [editorRef.current]);
   useEffect(() => {
-    if (!currentDashOff.id) {
+    if (!currentDashOff.id || currentDashOff.id !== id) {
       dispatch(fetchCurrentDashOff(id));
     }
   }, [id]);
