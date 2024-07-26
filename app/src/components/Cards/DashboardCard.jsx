@@ -30,7 +30,7 @@ const DashboardCard = ({
     await createChallenge(cardId);
   };
   const goToDashOff = () => {
-    navigate(`/dashoffs/${dashOffId}`);
+    window.location.href = `/dashoffs/${dashOffId}`;
   };
   const actionHandler = {
     [CHALLENGE_ACTION.CONTINUE_CHALLENGE.name]: goToEditorSpace,
