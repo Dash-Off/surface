@@ -1,5 +1,7 @@
 import { useEffect, useMemo, useState } from "react";
 import Particles, { initParticlesEngine } from "@tsparticles/react";
+import { purple } from '@mui/material/colors';
+
 // import { loadAll } from "@tsparticles/all"; // if you are going to use `loadAll`, install the "@tsparticles/all" package too.
 // import { loadFull } from "tsparticles"; // if you are going to use `loadFull`, install the "tsparticles" package too.
 import { loadSlim } from "@tsparticles/slim"; // if you are going to use `loadSlim`, install the "@tsparticles/slim" package too.
@@ -58,10 +60,10 @@ const Party = () => {
       },
       particles: {
         color: {
-          value: "#ffffff",
+          value: "#4a148c",
         },
         links: {
-          color: "#ffffff",
+          color: "#4a148c",
           distance: 150,
           enable: true,
           opacity: 0.3,

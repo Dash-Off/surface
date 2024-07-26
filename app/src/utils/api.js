@@ -3,6 +3,7 @@ import { toast } from "react-toastify";
 import {
   loadCurrentDashOff,
   loadCurrentViewDashOff,
+  loadChallenges,
 } from "../store/dashoff-slice";
 import { writingContentCache } from "./helper";
 
@@ -68,6 +69,22 @@ export const saveDashOff = (content, cb) => {
     });
 };
 
+export const createChallenge = (challengeId, cb) => {
+  return api
+    .post(getURL("/challenges"), {
+      type: "CHALLENGE",
+      challenge_id: challengeId,
+    })
+    .then(({ data }) => {
+      toast(data.message);
+      window.location.href = `/space/${data.dashOff._id}`;
+    })
+    .catch((err) => {
+      if (cb) toast.error("Challenge unlock failed... ");
+      console.log("Failed to create challenge...");
+    });
+};
+
 export const fetchCurrentDashOff =
   (id, readOnly = false) =>
   (dispatch) => {
@@ -84,6 +101,21 @@ export const fetchCurrentDashOff =
         // handle if required
       });
   };
+
+export const fetchChallenges = () => (dispatch) => {
+  return api
+    .get(getURL(`/challenges`))
+    .then(({ data }) => {
+      dispatch(loadChallenges(data));
+    })
+    .catch((err) => {
+      toast.error("Failed to fetch challenges..");
+    });
+};
+
+export const startChallenge = () => (dispatch) => {
+  return;
+};
 
 export const expireDashOff = (id, challengeId) => (dispatch) => {
   return api
@@ -114,7 +146,7 @@ export const completeDashOff = (id) => (dispatch) => {
       .patch(getURL(`/completeDashOff`), { dash_off_id: id })
       .then(({ data }) => {
         dispatch(loadCurrentDashOff({}));
-        window.location.href = "/dashboard1";
+        window.location.href = "/dashboard";
       })
       .catch((e) => {
         toast.error("Action failed, please retry after sometime...");

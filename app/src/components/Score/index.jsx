@@ -9,7 +9,7 @@ const Score = ({ dashOff }) => {
   return (
     <Box display={"flex"}>
       {dashOff.status !== "EVALUATED" && (
-        <Grid width={"35vw"} margin={"auto"} textAlign={"center"}>
+        <Grid width={"35vw"} margin={"auto"} textAlign={"center"} ml="20px">
           <TimelapseIcon sx={{ color: "#787887", fontSize: "44px" }} />
           <Typography fontStyle={"italic"} component="div">
             Evaluation in progress....

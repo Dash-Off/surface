@@ -56,3 +56,12 @@ export function getRandomHexColor() {
 
   return `#${hexRed}${hexGreen}${hexBlue}`;
 }
+
+export function secondsToMinutes(seconds) {
+  const minutes = Math.floor(seconds / 60);
+  const remainingSeconds = seconds % 60;
+  return (
+    `${minutes} minute(s)` +
+    (remainingSeconds ? `${remainingSeconds} second(s)` : "")
+  );
+}
