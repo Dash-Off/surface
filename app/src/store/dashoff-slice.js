@@ -1,11 +1,18 @@
 import { createSlice } from "@reduxjs/toolkit";
 import { secondsToMinutes } from "../utils/helper";
 import moment from "moment";
+import { COMPLETED_DASHOFFS_STATES } from "../utils/constants";
 
 const initiateState = {
   current: {},
   currentView: {},
   challenges: [],
+  myDashOffs: {
+    isLoading: false,
+    completed: 0,
+    total: 0,
+    dashOffs: [],
+  },
 };
 
 const formatCurrentDashOff = (dashOff) => {
@@ -117,6 +124,35 @@ const formatChallenges = (challenge) => {
   };
 };
 
+const formatDashOffCard = (dashOff) => {
+  return {
+    _id: dashOff._id,
+    title: dashOff.title,
+    body: dashOff.raw || "",
+    createdAt: dashOff.createdAt
+      ? moment(dashOff.createdAt).format("MMMM Do YYYY, h:mm:ss a")
+      : "",
+    public: !!dashOff.public,
+    completed: COMPLETED_DASHOFFS_STATES.includes(dashOff.status),
+    scored: dashOff.status === "EVALUATED",
+  };
+};
+const formatMyDashOffs = (dashOffs) => {
+  const total = dashOffs.length;
+  let completed = 0;
+  if (total) {
+    completed = dashOffs.filter((d) =>
+      COMPLETED_DASHOFFS_STATES.includes(d.status),
+    ).length;
+  }
+  return {
+    isLoading: false,
+    total,
+    completed,
+    dashOffs: dashOffs.map((d) => formatDashOffCard(d)),
+  };
+};
+
 export const dashOffSlice = createSlice({
   name: "dashOff",
   initialState: initiateState,
@@ -125,6 +161,12 @@ export const dashOffSlice = createSlice({
       return {
         ...state,
         current: formatCurrentDashOff(action.payload),
+      };
+    },
+    loadMyDashOffs: (state, action) => {
+      return {
+        ...state,
+        myDashOffs: formatMyDashOffs(action.payload),
       };
     },
     loadCurrentViewDashOff: (state, action) => {
@@ -144,8 +186,12 @@ export const dashOffSlice = createSlice({
   },
 });
 
-export const { loadCurrentDashOff, loadCurrentViewDashOff, loadChallenges } =
-  dashOffSlice.actions;
+export const {
+  loadCurrentDashOff,
+  loadCurrentViewDashOff,
+  loadChallenges,
+  loadMyDashOffs,
+} = dashOffSlice.actions;
 
 export const getCurrent = () => {
   return (state) => state.dashOff.current;
@@ -155,6 +201,9 @@ export const getView = () => {
 };
 export const getChallenges = () => {
   return (state) => state.dashOff.challenges;
+};
+export const getMyDashOffs = () => {
+  return (state) => state.dashOff.myDashOffs;
 };
 
 export default dashOffSlice.reducer;

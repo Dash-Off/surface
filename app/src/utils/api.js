@@ -4,6 +4,7 @@ import {
   loadCurrentDashOff,
   loadCurrentViewDashOff,
   loadChallenges,
+  loadMyDashOffs,
 } from "../store/dashoff-slice";
 import { writingContentCache } from "./helper";
 
@@ -110,6 +111,17 @@ export const fetchChallenges = () => (dispatch) => {
     })
     .catch((err) => {
       toast.error("Failed to fetch challenges..");
+    });
+};
+
+export const fetchDashOffs = () => (dispatch) => {
+  return api
+    .get(getURL(`/myDashOffs`))
+    .then(({ data }) => {
+      dispatch(loadMyDashOffs(data));
+    })
+    .catch((err) => {
+      toast.error("Failed to fetch dashOffs..");
     });
 };
 

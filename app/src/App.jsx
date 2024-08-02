@@ -31,7 +31,7 @@ const App = () => {
         <Route path="/space/:id" exact element={<Editor />} />
         <Route path="/dashoffs/:id" exact element={<DashOff />} />
         <Route path="/dashoffs/:id/preview" exact element={<Viewer />} />
-        <Route path="/my-dashoff" exact element={<MyDashOff />} />
+        <Route path="/my-dashoffs" exact element={<MyDashOff />} />
         <Route path="/my-profile" exact element={<Profile />} />
       </Routes>
     </Router>

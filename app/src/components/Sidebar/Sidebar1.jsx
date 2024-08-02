@@ -22,7 +22,7 @@ export default function PermanentDrawerLeft({ open, close }) {
   };
 
   const handleMyDashOff = () => {
-    navigate("/my-dashoff");
+    navigate("/my-dashoffs");
   };
 
   const handleDashboard = () => {
