@@ -74,8 +74,6 @@ const MyDashOff = () => {
     dispatch(fetchDashOffs());
   }, []);
 
-
-
   return (
     <Authenticate>
       <Navbar size={"small"} />
@@ -129,7 +127,13 @@ const MyDashOff = () => {
                   <Grid container spacing={1}>
                     {myDashOffs.dashOffs.map((card) => {
                       return (
-                        <Grid key={card._id} item xs={12} sm={6} lg={4}>
+                        <Grid
+                          key={card._id}
+                          item
+                          xs={12}
+                          sm={myDashOffs.dashOffs.length > 3 ? 6 : 12}
+                          lg={myDashOffs.dashOffs.length > 3 ? 4 : 12}
+                        >
                           <MyDashOffCard
                             cardId={card._id}
                             cardTitle={card.title}
