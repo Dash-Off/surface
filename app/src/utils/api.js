@@ -8,7 +8,9 @@ import {
 } from "../store/dashoff-slice";
 import { writingContentCache } from "./helper";
 
-const HOST_URL = "http://localhost:3000/api/v1";
+const HOST_URL =
+  import.meta.env.VITE_HOST_URL || "http://localhost:3000/api/v1";
+
 const api = axios.create({
   baseURL: HOST_URL,
   withCredentials: true,
