@@ -9,7 +9,7 @@ import { Backdrop } from "@mui/material";
 const Authenticate = (props) => {
   const loggedIn = useSelector(isLoggedIn());
   const [isLoading, setIsLoading] = useState(false);
-  const redirectURL = props.loginPage ? "/home" : "/auth";
+  const redirectURL = props.loginPage ? "/" : "/auth";
   const navigate = useNavigate();
   const dispatch = useDispatch();
   useEffect(() => {
