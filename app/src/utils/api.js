@@ -13,6 +13,7 @@ const HOST_URL =
 
 const api = axios.create({
   baseURL: HOST_URL,
+  credentials: "include",
   withCredentials: true,
   headers: {
     "Content-type": "application/json",
