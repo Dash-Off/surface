@@ -1,8 +1,14 @@
 import Navbar from "../../components/Navbar/Navbar";
 import { Button, Grid, Typography, Fade } from "@mui/material";
 import { INVITE_LINK } from "../../constants.js";
+import { NotificationsOff } from "@mui/icons-material";
+import { useInView } from "react-intersection-observer";
 
 const Home = () => {
+  const { ref, inView } = useInView({
+    triggerOnce: true, // Trigger the fade effect only once
+    threshold: 0.1, // Trigger when 10% of the component is visible
+  });
   return (
     <>
       <div className=" h-screen bg-no-repeat w-full bg-cover">
@@ -48,7 +54,7 @@ const Home = () => {
             variant="contained"
           >
             <Typography color={"white"} fontWeight={"500"} fontSize="20px">
-              Join Waitlist
+              Join Now
             </Typography>
           </Button>
           <Grid
@@ -56,7 +62,7 @@ const Home = () => {
               display: "flex",
               flexWrap: "wrap",
               justifyContent: "center",
-              mt: "40px",
+              my: "40px",
             }}
           >
             <Fade timeout={3000} appear in>
@@ -83,11 +89,228 @@ const Home = () => {
             <Fade timeout={9000} appear in>
               <div className="bg-slate-400 bg-opacity-25 max-w-40 text-white py-6 px-4 text-center align-middle rounded-md">
                 <Typography color={"black"} fontWeight={"300"}>
-                  Don’t wait for inspiration, join the wailist
+                  Don’t wait for inspiration, Start writing today
                 </Typography>
               </div>
             </Fade>
           </Grid>
+
+          <Grid
+            sx={{
+              my: "10vw",
+              display: "flex",
+              justifyContent: "space-around",
+              px: "5vw",
+              alignItems: "center",
+              flexWrap: "wrap",
+            }}
+          >
+            <Grid
+              sx={{
+                width: {
+                  xs: "100%",
+                  sm: "50%",
+                  md: "50%",
+                  lg: "50%",
+                },
+              }}
+            >
+              <img
+                style={{
+                  padding: "10px",
+                  boxShadow: "6px 2px 20px lightgray",
+                  borderRadius: "20px",
+                  objectFit: "cover",
+                }}
+                alt="Challenge screen snapshot"
+                src="/src/assets/challenges.png"
+                width={"100%"}
+              />
+            </Grid>
+            <Grid
+              sx={{
+                marginLeft: { xs: "0px", sm: "0px", md: "30px", lg: "30px" },
+                my: { xs: "30px", sm: "30px", md: "0px", lg: "0px" },
+                textAlign: {
+                  xs: "center",
+                  sm: "center",
+                  md: "left",
+                  lg: "left",
+                },
+                maxWidth: "400px",
+              }}
+            >
+              <Typography variant="h3" color={"primary"}>
+                Take on Exciting Challenges
+              </Typography>
+              <br />
+              <Typography color={"gray"}>
+                Creativity doesn’t have one definite way so the only way to get
+                started is just write first. Take on exciting challenges and
+                achieve your goals, one at a time !
+              </Typography>
+            </Grid>
+          </Grid>
+          <Grid
+            sx={{
+              my: "10vw",
+              display: "flex",
+              justifyContent: "space-around",
+              px: "5vw",
+              flexWrap: "wrap",
+              alignItems: "center",
+              width: "100%",
+            }}
+            ref={ref}
+          >
+            <Grid
+              sx={{
+                marginLeft: { xs: "0px", sm: "0px", md: "30px", lg: "30px" },
+                my: { xs: "30px", sm: "30px", md: "0px", lg: "0px" },
+                textAlign: {
+                  xs: "center",
+                  sm: "center",
+                  md: "left",
+                  lg: "left",
+                },
+                maxWidth: "500px",
+              }}
+            >
+              <Typography variant="h3" color={"primary"}>
+                Write Distraction Free
+              </Typography>
+              <br />
+              <Typography color={"gray"}>
+                Our distraction free editor makes sure your focus is only on
+                your creative writing. Adopt the{" "}
+                <u>
+                  <a href="https://writingprocess.mit.edu/process/step-1-generate-ideas/instructions/freewriting">
+                    Free-writing
+                  </a>
+                </u>{" "}
+                technique to start. Do not worry about grammar and vocab, its
+                taken care of later..
+              </Typography>
+            </Grid>
+            <Fade timeout={4000} appear in={inView}>
+              <NotificationsOff
+                sx={{ fontSize: "300px", color: "#787887" }}
+              ></NotificationsOff>
+            </Fade>
+          </Grid>
+          <Grid
+            sx={{
+              my: "10vw",
+              display: "flex",
+              justifyContent: "space-around",
+              px: "5vw",
+              flexWrap: "wrap",
+              alignItems: "center",
+              width: "100%",
+            }}
+          >
+            <Grid
+              sx={{
+                width: {
+                  xs: "100%",
+                  sm: "50%",
+                  md: "50%",
+                  lg: "50%",
+                },
+              }}
+            >
+              <img
+                style={{
+                  padding: "10px",
+                  boxShadow: "6px 2px 20px lightgray",
+                  borderRadius: "20px",
+                  objectFit: "cover",
+                }}
+                alt="Challenge screen snapshot"
+                src="/src/assets/scores.png"
+                width="100%"
+              />
+            </Grid>
+            <Grid
+              sx={{
+                marginLeft: { xs: "0px", sm: "0px", md: "30px", lg: "30px" },
+                my: { xs: "30px", sm: "30px", md: "0px", lg: "0px" },
+                textAlign: {
+                  xs: "center",
+                  sm: "center",
+                  md: "left",
+                  lg: "left",
+                },
+                maxWidth: "400px",
+              }}
+            >
+              <Typography variant="h3" color={"primary"}>
+                Insightful Scores & Suggestions
+              </Typography>
+              <br />
+              <Typography color={"gray"}>
+                Use our suggestions and scoring to identify strengths, areas for
+                improvement, and refine your writing skills.
+              </Typography>
+            </Grid>
+          </Grid>
+          <Grid
+            sx={{
+              my: "10vw",
+              display: "flex",
+              justifyContent: "space-around",
+              px: "5vw",
+              flexWrap: "wrap",
+              alignItems: "center",
+              width: "100%",
+            }}
+          >
+            <Grid
+              sx={{
+                marginLeft: { xs: "0px", sm: "0px", md: "30px", lg: "30px" },
+                my: { xs: "30px", sm: "30px", md: "0px", lg: "0px" },
+                textAlign: {
+                  xs: "center",
+                  sm: "center",
+                  md: "left",
+                  lg: "left",
+                },
+                maxWidth: "400px",
+              }}
+            >
+              <Typography variant="h3" color={"primary"}>
+                Share DashOff
+              </Typography>
+              <br />
+              <Typography color={"gray"}>
+                Each content you write can be shared with a unique link and
+                showcased on your profile once you set it public.
+              </Typography>
+            </Grid>
+            <Grid
+              sx={{
+                width: {
+                  xs: "100%",
+                  sm: "50%",
+                  md: "50%",
+                  lg: "50%",
+                },
+              }}
+            >
+              <img
+                style={{
+                  padding: "10px",
+                  boxShadow: "6px 2px 20px lightgray",
+                  borderRadius: "20px",
+                  objectFit: "cover",
+                }}
+                alt="DashOffs snapshot"
+                src="/src/assets/dashoffs.png"
+                width="100%"
+              />
+            </Grid>
+          </Grid>
+          <Typography color={"primary"}>&copy; DashOff 2024</Typography>
         </Grid>
       </div>
     </>
