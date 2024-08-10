@@ -2,9 +2,12 @@ import { Typography, Grid } from "@mui/material";
 import MenuIcon from "@mui/icons-material/Menu";
 import { useState } from "react";
 import PermanentDrawerLeft from "../Sidebar/Sidebar1.jsx";
+import { useSelector } from "react-redux";
+import { isLoggedIn } from "../../store/user-slice.js";
 
 const Navbar = ({ size }) => {
   const [open, setOpen] = useState(false);
+  const loggedIn = useSelector(isLoggedIn());
   const isSmall = size == "small";
   let positionStyles = {};
   if (isSmall) {
@@ -43,11 +46,13 @@ const Navbar = ({ size }) => {
             </Typography>
           </h3>
         </div>
-        <MenuIcon
-          sx={{ cursor: "pointer" }}
-          color="secondary"
-          onClick={() => setOpen(true)}
-        />
+        {!!loggedIn && (
+          <MenuIcon
+            sx={{ cursor: "pointer" }}
+            color="secondary"
+            onClick={() => setOpen(true)}
+          />
+        )}
       </div>
       <PermanentDrawerLeft open={open} close={close} />
     </Grid>
