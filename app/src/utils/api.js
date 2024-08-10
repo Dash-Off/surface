@@ -36,7 +36,10 @@ export const login = (data, cb) => {
     .catch((err) => {
       console.log(err);
       toast(
-        (err && err.response && err.response.data.message) ||
+        (err &&
+          err.response &&
+          err.response.data.error &&
+          err.response.data.error.message) ||
           "Error: Login failed",
       );
     });
