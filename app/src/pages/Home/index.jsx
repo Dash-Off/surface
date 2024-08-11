@@ -3,6 +3,9 @@ import { Button, Grid, Typography, Fade } from "@mui/material";
 import { INVITE_LINK } from "../../constants.js";
 import { NotificationsOff } from "@mui/icons-material";
 import { useInView } from "react-intersection-observer";
+import DashOffImage from "../../assets/dashoffs.png";
+import ChallengesImage from "../../assets/challenges.png";
+import ScoresImage from "../../assets/scores.png";
 
 const Home = () => {
   const { ref, inView } = useInView({
@@ -123,7 +126,7 @@ const Home = () => {
                   objectFit: "cover",
                 }}
                 alt="Challenge screen snapshot"
-                src="/src/assets/challenges.png"
+                src={ChallengesImage}
                 width={"100%"}
               />
             </Grid>
@@ -226,8 +229,8 @@ const Home = () => {
                   borderRadius: "20px",
                   objectFit: "cover",
                 }}
-                alt="Challenge screen snapshot"
-                src="/src/assets/scores.png"
+                alt="Scores screen snapshot"
+                src={ScoresImage}
                 width="100%"
               />
             </Grid>
@@ -305,7 +308,7 @@ const Home = () => {
                   objectFit: "cover",
                 }}
                 alt="DashOffs snapshot"
-                src="/src/assets/dashoffs.png"
+                src={DashOffImage}
                 width="100%"
               />
             </Grid>
