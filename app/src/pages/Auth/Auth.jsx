@@ -3,6 +3,7 @@ import SignUp from '../../components/SignUp/SignUp'
 import Login from '../../components/Login/Login';
 import { Grid, Fade, useMediaQuery, Button } from '@mui/material'
 import SignUpImage from '../../assets/LoginImage.jpg';
+import Navbar from '../../components/Navbar/Navbar';
 
 
 const Auth = () => {
@@ -31,6 +32,7 @@ return (
       alignItems={"center"}
       justifyContent={"center"}
     >
+      <Navbar size={"small"} />
       {/* <Button onClick={() => setIsSignUp(!isSignUp)}>
         {isSignUp ? "Already have an account? Log In" : "Don't have an account? Sign Up"}
       </Button> */}
