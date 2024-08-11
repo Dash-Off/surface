@@ -199,20 +199,6 @@ const Login = (props) => {
               </Box>
 
               {/* <Typography color={"#ada9a8"} fontWeight={"400"} fontSize="15px">  */}
-              <a href="/login">
-                <Typography
-                  sx={{
-                    ml: "2px",
-                    textDecoration: "underline",
-                    color: "secondary.dark",
-                    ":hover": { color: "black" },
-                    width: { xs: "50vw", sm: "60vw", md: "30vw", lg: "20vw" },
-                  }}
-                  variant="span"
-                >
-                  Forgot Password ?
-                </Typography>
-              </a>
 
               <Typography color={"#ada9a8"} fontWeight={"400"} fontSize="15px">
                 {/* Need an account ?
