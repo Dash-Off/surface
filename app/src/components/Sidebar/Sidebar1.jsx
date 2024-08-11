@@ -29,14 +29,9 @@ export default function PermanentDrawerLeft({ open, close }) {
     navigate("/dashboard");
   };
 
-  const handleProfile = () => {
-    navigate("/my-profile");
-  };
-
   const navItems = {
     Dashboard: { handler: handleDashboard, icon: Home },
     "My DashOffs": { handler: handleMyDashOff, icon: Article },
-    Profile: { handler: handleProfile, icon: Person },
   };
 
   const keysList = Object.keys(navItems);
